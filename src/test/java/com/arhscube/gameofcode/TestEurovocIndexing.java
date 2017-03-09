@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.DocumentFactory;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -25,23 +26,25 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 public class TestEurovocIndexing {
-	static Logger log ;
-	Document fr, en, de;
+	static Logger log;
+	HashMap<String, String> fr_descriptors;
+	HashMap<String, String> de_descriptors;
+	HashMap<String, String> en_descriptors;
 
 	private static SAXReader reader = new SAXReader();
 
 	@BeforeClass
 	public static void initReader() {
-		log= LoggerFactory.getLogger(TestEurovocIndexing.class);
+		log = LoggerFactory.getLogger(TestEurovocIndexing.class);
 		reader.setEntityResolver(new EntityResolver() {
 
 			@Override
 			public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
-				log.info("Resolve public={} system={} ",publicId, systemId);
+				log.info("Resolve public={} system={} ", publicId, systemId);
 				String resource = systemId.substring(systemId.lastIndexOf("/"));
-				log.info("get resource {} ",resource);
+				log.info("get resource {} ", resource);
 				InputStream is = TestEurovocIndexing.class.getResourceAsStream(resource);
-				log.info("resolved {} ",is);
+				log.info("resolved {} ", is);
 				return new InputSource(is);
 			}
 		});
@@ -50,44 +53,57 @@ public class TestEurovocIndexing {
 	@Before
 	public void initDataFr() throws Exception {
 		log.info("Reading fr");
-		fr = reader.read(TestEurovocIndexing.class.getResourceAsStream("/desc_fr.xml"));
+		fr_descriptors = loadThesaurus("/desc_fr.xml");
+	}
+
+	private HashMap<String, String> loadThesaurus(String resource) {
+		Document doc;
+		try {
+			doc = reader.read(this.getClass().getResourceAsStream(resource));
+		} catch (DocumentException e) {
+			log.error("Can't load resource '{}',resource,e");
+			return null;
+		}
+		@SuppressWarnings("unchecked")
+		List<Element> records = DocumentHelper.createXPath("/DESCRIPTEUR/RECORD").selectNodes(doc);
+		log.info(" size = {}", records.size());
+		HashMap<String, String> descriptors = new HashMap<>();
+		for (Element record : records) {
+			String id = record.element("DESCRIPTEUR_ID").getText();
+			String label = record.element("LIBELLE").getText();
+			log.trace("{} = {}", id, label);
+			descriptors.put(label.toLowerCase(), id);
+		}
+		return descriptors;
 	}
 
 	@Before
 	public void initDataDe() throws Exception {
 		log.info("Reading de");
-		de = reader.read(TestEurovocIndexing.class.getResourceAsStream("/desc_de.xml"));
+		de_descriptors = loadThesaurus("/desc_de.xml");
 	}
 
 	@Before
 	public void initDataEn() throws Exception {
 		log.info("Reading en");
-		en = reader.read(TestEurovocIndexing.class.getResourceAsStream("/desc_en.xml"));
-	}
-	HashMap<String, String> fr_descriptors = new HashMap<>();
-	@Test
-	public void testFr() {
-		assertNotNull(fr);
-		List<Element> records = DocumentHelper.createXPath("/DESCRIPTEUR/RECORD").selectNodes(fr);
-		log.info(" size = {}",records.size());
-		for(Element record : records){
-			String id= record.element("DESCRIPTEUR_ID").getText();
-			String label=record.element("LIBELLE").getText(); 
-			log.debug("{} = {}",id,label);
-			fr_descriptors.put(label.toLowerCase(), id);
-		}
-		
-		List<String> found = findDescriptors("Le fil de l'eau",fr_descriptors);
-		assertEquals("found 2 descriptors", 2,found.size());
-		log.info("Found '{}' descriptors in text",found);
+		en_descriptors = loadThesaurus("/desc_en.xml");
 	}
 
-	private List<String> findDescriptors(String string,HashMap<String, String> descriptors) {
+
+	@Test
+	public void testFr() {
+		assertNotNull(fr_descriptors);
+		List<String> found = findDescriptors("Le fil de l'eau", fr_descriptors);
+		assertEquals("found 2 descriptors", 2, found.size());
+		log.info("Found '{}' descriptors in text", found);
+	}
+
+	private List<String> findDescriptors(String string, HashMap<String, String> descriptors) {
 		String tokens[] = string.toLowerCase().split(" |'");
 		List<String> ret = new ArrayList<>();
-		for(String token:tokens){
-			if(descriptors.containsKey(token)){
-				log.debug("found {} in thesaurus",token);
+		for (String token : tokens) {
+			if (descriptors.containsKey(token)) {
+				log.debug("found {} in thesaurus", token);
 				ret.add(descriptors.get(token));
 			}
 		}
