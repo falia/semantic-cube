@@ -19,22 +19,9 @@
 </head>
 
 <body>
-
-<nav class="navbar navbar-inverse">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Spring Boot</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <c:url value="/" var="home" />
-                <li class="active"><a href="${home}">Home</a></li>
-                <c:url value="/sparql" var="sparql" />
-                <li><a href="${sparql}">Sparql</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<script type="text/javascript" src="webjars/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<%@ include file="header.jsp" %>
 
 <div class="container">
 
@@ -45,11 +32,6 @@
     <div id="map" class="map" tabindex="0"></div>
 
 </div>
-
-<script type="text/javascript" src="webjars/jquery/3.1.1/jquery.min.js"></script>
-<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
 
 
 <c:url value="/js/ol.js" var="oljs" />
