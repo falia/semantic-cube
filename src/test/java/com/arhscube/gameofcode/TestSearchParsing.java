@@ -12,8 +12,22 @@ public class TestSearchParsing {
 	static Logger log = LoggerFactory.getLogger(TestSearchParsing.class);
 
 	@Test
-	public void test() {
+	public void testEurovocFirst() {
 		String search = "eau AND walferdange";
+		SearchTree s = Parser.parse(search, LANG.FR);
+		log.debug("search = {}", s);
+	}
+
+	@Test
+	public void testEurovocSecond() {
+		String search = "walferdange AND eau";
+		SearchTree s = Parser.parse(search, LANG.FR);
+		log.debug("search = {}", s);
+	}
+
+	@Test
+	public void testNoOperands() {
+		String search = "walferdange eau dans le jardin";
 		SearchTree s = Parser.parse(search, LANG.FR);
 		log.debug("search = {}", s);
 	}
