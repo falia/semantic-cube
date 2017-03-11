@@ -23,29 +23,34 @@ public class Parser {
 	private static final String TOKENIZER = "[ '/.,()]";
 	private static Logger log = LoggerFactory.getLogger(Parser.class);;
 
-	public static HashMap<String, List<Term>> loadThesaurus(String resource) {
-		Document doc;
+	public enum LANG {
+		DE, EN, FR
+	};
 
+	public static HashMap<String, List<Term>> loadThesaurus(LANG lang) {
+		Document terms;
+		Document useFor;
 		try {
 			reader.setEntityResolver(new EntityResolver() {
 
 				@Override
 				public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
 					log.info("Resolve public={} system={} ", publicId, systemId);
-					String resource = systemId.substring(systemId.lastIndexOf("/"));
+					String resource = systemId.substring(systemId.lastIndexOf("/")+1);
 					log.info("get resource {} ", resource);
 					InputStream is = Parser.class.getResourceAsStream(resource);
 					log.info("resolved {} ", is);
 					return new InputSource(is);
 				}
 			});
-			doc = reader.read(Parser.class.getResourceAsStream(resource));
+			terms= reader.read(Parser.class.getResourceAsStream("desc_"+lang.toString().toLowerCase()+".xml"));
+			useFor = reader.read(Parser.class.getResourceAsStream("uf_"+lang.toString().toLowerCase()+".xml"));
 		} catch (DocumentException e) {
-			log.error("Can't load resource '{}',resource,e");
+			log.error("Can't load resource for '{}'",lang,e);
 			return null;
 		}
 		@SuppressWarnings("unchecked")
-		List<Element> records = DocumentHelper.createXPath("/DESCRIPTEUR/RECORD").selectNodes(doc);
+		List<Element> records = DocumentHelper.createXPath("/DESCRIPTEUR/RECORD").selectNodes(terms);
 		log.info(" size = {}", records.size());
 		HashMap<String, List<Term>> descriptors = new HashMap<>();
 		for (Element record : records) {
@@ -57,6 +62,21 @@ public class Parser {
 				descriptors.put(firstWord, new ArrayList<>());
 			}
 			descriptors.get(firstWord).add(term);
+		}
+		records = DocumentHelper.createXPath("/USED_FOR/RECORD").selectNodes(useFor);
+		log.info(" size = {}", records.size());
+		for (Element record : records) {
+			List<Element> ufEls = DocumentHelper.createXPath("UF/UF_EL").selectNodes(record); 
+			for(Element ufEl : ufEls){
+				Term term = new Term();
+				term.id = record.element("DESCRIPTEUR_ID").getText();
+				term.libelle = ufEl.getText().toLowerCase();
+				String firstWord = tokenize(term.libelle)[0];
+				if (!descriptors.containsKey(firstWord)) {
+					descriptors.put(firstWord, new ArrayList<>());
+				}
+				descriptors.get(firstWord).add(term);
+			}
 		}
 		return descriptors;
 	}
