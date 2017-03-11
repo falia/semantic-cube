@@ -1,4 +1,4 @@
-package hello;
+package controller;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.util.EntityUtils;
@@ -28,6 +28,13 @@ public class MapController {
         System.out.println("hello from MapController.addresses()");
 
         return getJSONMock("https://download.data.public.lu/resources/adresses-georeferencees-bd-adresses/20170306-053100/addresses.geojson");
+    }
+
+    @RequestMapping("/json/parks")
+    public @ResponseBody String parks() {
+        System.out.println("hello from MapController.parks()");
+
+        return getJSON("https://download.data.public.lu/geoportail_public/tourisme2geojson.fmw?category=17&format=geojson");
     }
 
     public String getJSONMock(String url) {
