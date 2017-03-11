@@ -19,16 +19,15 @@ import org.xml.sax.SAXException;
 
 import com.arhscube.gameofcode.TestEurovocIndexing;
 
-
 public class Parser {
 
 	private static SAXReader reader = new SAXReader();
-	private static final String TOKENIZER = " |'|/";
-	private static Logger log=LoggerFactory.getLogger(TestEurovocIndexing.class);;
+	private static final String TOKENIZER = "[ '/.,()]";
+	private static Logger log = LoggerFactory.getLogger(TestEurovocIndexing.class);;
 
 	public static HashMap<String, List<Term>> loadThesaurus(String resource) {
 		Document doc;
-		
+
 		try {
 			reader.setEntityResolver(new EntityResolver() {
 
@@ -53,29 +52,30 @@ public class Parser {
 		HashMap<String, List<Term>> descriptors = new HashMap<>();
 		for (Element record : records) {
 			Term term = new Term();
-			term.id=record.element("DESCRIPTEUR_ID").getText();
-			term.libelle=record.element("LIBELLE").getText();
-			String firstWord = term.libelle.split(TOKENIZER)[0];
-			if(!descriptors.containsKey(firstWord)){
-				descriptors.put(firstWord,new ArrayList<>());
+			term.id = record.element("DESCRIPTEUR_ID").getText();
+			term.libelle = record.element("LIBELLE").getText().toLowerCase();
+			String firstWord = tokenize(term.libelle)[0];
+			if (!descriptors.containsKey(firstWord)) {
+				descriptors.put(firstWord, new ArrayList<>());
 			}
 			descriptors.get(firstWord).add(term);
 		}
 		return descriptors;
 	}
 
-	public static String[] tokenize(String string) {
+	private static String[] tokenize(String string) {
 		// TODO Auto-generated method stub
-		return string.split(TOKENIZER);
+		return string.toLowerCase().split(TOKENIZER);
 	}
+
 	public static List<Term> findDescriptors(String string, HashMap<String, List<Term>> descriptors) {
-		String tokens[] = Parser.tokenize(string);
+		String tokens[] = tokenize(string);
 		List<Term> ret = new ArrayList<>();
 		for (String token : tokens) {
 			if (descriptors.containsKey(token)) {
-				for(Term t:descriptors.get(token)){
-					if(string.indexOf(t.getLibelle())>-1){
-						if(!ret.contains(t)){
+				for (Term t : descriptors.get(token)) {
+					if (string.indexOf(t.getLibelle()) > -1) {
+						if (!ret.contains(t)) {
 							log.debug("found {} in thesaurus", t);
 							ret.add(t);
 						}
@@ -85,6 +85,5 @@ public class Parser {
 		}
 		return ret;
 	}
-
 
 }
