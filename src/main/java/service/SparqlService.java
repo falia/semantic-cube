@@ -15,7 +15,7 @@ public interface SparqlService {
     void writeSparqlQuery(String queryString);
 
     default void flushSparqlQuery(){
-        TripleStoreService.getInstance().getModel();
+        TripleStoreService.getInstance().writeModelToFile();
     }
 
 
