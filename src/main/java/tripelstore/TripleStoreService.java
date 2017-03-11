@@ -12,17 +12,14 @@ import org.springframework.stereotype.Service;
 /**
  * Created by borellda on 3/11/2017.
  */
-public class TripleStoreService {
-    /* The Logger */
-    private static final Logger log = LoggerFactory.getLogger(TripleStoreService.class);
-    private static final String TROPLESTORE = new String("./tbd");
-    private Model dcatap;
+public enum TripleStoreService {
 
-    public TripleStoreService() {
-        this.dcatap = RDFDataMgr.loadModel("./GoC_example.owl") ;
-    }
+    STORE {
+        @Override
+        public Model getModel(){
+            return RDFDataMgr.loadModel("./GoC_example.owl") ;
+        }
+    };
 
-
-
-
+    public abstract Model getModel();
 }
