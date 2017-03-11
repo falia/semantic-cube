@@ -1,3 +1,14 @@
 #map:focus {
     outline: #4A74A8 solid 0.15em;
 }
+.dataSetButton{
+    border: 1px solid black;
+    padding: 5px;
+    width: 150px;
+    text-align: -webkit-center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.dataSetButton:hover{
+    cursor: pointer;
+}

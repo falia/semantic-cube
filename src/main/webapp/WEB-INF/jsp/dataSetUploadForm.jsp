@@ -24,34 +24,37 @@
 <c:url value="/js/addDataSet.js" var="addDataSet" />
 <script src="${addDataSet}"></script>
 <%@ include file="header.jsp" %>
-<h2>Upload a new DataSet</h2>
-<form id="datasetForm">
-    <div>DataSet title:</div>
-    <input class="title" type="text" name="title"><br>
-    <div>DataSet desscription:</div>
-    <input class="descr" type="text" name="description"><br>
-    <fieldset id="dataFieldSet">
-        <div>
-            Datasource:
-        </div>
-        <div>
-            Type:
-        </div>
-        <input class="type" type="text" name="type1"><br>
-        <div>
-            URL:
-        </div>
-        <input class="url" type="text" name="url1"><br>
-    </fieldset>
-    <div id="addsource">New Datasource</div>
-    <fieldset id="tags">
-        <div>
-            Tag:
-        </div>
-        <input type="text" name="tag1"><br>
-    </fieldset>
-    <div id="addTag">New Tag</div>
-    <div id="submitButton">Submit</div>
-</form>
+<div class="container" id="dataset">
+    <h2>Upload a new DataSet</h2>
+    <form id="datasetForm" class=".form-group">
+        <div>DataSet title:</div>
+        <input class="title form-control" type="text" name="title"><br>
+        <div>DataSet description:</div>
+        <input class="descr form-control" type="text" name="description"><br>
+        <fieldset id="dataFieldSet">
+            <div>
+                Datasource:
+            </div>
+            <div>
+                Type:
+            </div>
+            <input class="type form-control" type="text" name="type1"><br>
+            <div>
+                URL:
+            </div>
+            <input class="url form-control" type="text" name="url1"><br>
+        </fieldset>
+        <div id="addsource" class="dataSetButton">New Datasource</div>
+        <fieldset id="tags">
+            <div>
+                Tag:
+            </div>
+            <input class="tag form-control" type="text" name="tag1"><br>
+        </fieldset>
+        <div id="addTag" class="dataSetButton">New Tag</div>
+        <div id="submitButton" class="dataSetButton">Submit</div>
+    </form>
+</div>
+
 </body>
 </html>
