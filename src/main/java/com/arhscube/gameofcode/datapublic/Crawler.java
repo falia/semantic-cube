@@ -46,6 +46,7 @@ public class Crawler {
 
 	public static OpenDataset getDataset(URL url) throws Exception {
 		OpenDataset ret = new OpenDataset();
+		ret.origin = url;
 		try {
 			Document doc = Jsoup.parse(url, TIMEOUT);
 			ret.title = doc.title();

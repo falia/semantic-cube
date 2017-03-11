@@ -2,8 +2,8 @@ package service;
 
 import org.apache.jena.graph.Graph;
 import org.apache.jena.query.*;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.vocabulary.VCARD;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -12,6 +12,8 @@ import tripelstore.TripleStoreService;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by borellda on 3/11/2017.
@@ -37,16 +39,18 @@ public class SparqlServiceImpl implements SparqlService{
     }
 
     @Override
-    public void writeSparqlQuery(String query) {
-
+    public void addStatements2Store(Collection<Statement> statementList) {
+        Model store =  TripleStoreService.getInstance().getModel();
+        store.add(statementList.toArray(new Statement[statementList.size()]));
     }
-
+    @Override
     public void addRdf2Model(String rdfRepresentation){
         InputStream is = new ByteArrayInputStream( rdfRepresentation.getBytes() );
         this.addRdf2Model(is);
     }
-
+    @Override
     public void addRdf2Model(Path rdfFilePath){
+        File file = rdfFilePath.toFile();
         try (InputStream in = new FileInputStream(rdfFilePath.toFile())) {
             this.addRdf2Model(in);
         } catch (IOException e) {
@@ -60,6 +64,9 @@ public class SparqlServiceImpl implements SparqlService{
         Model memModel = ModelFactory.createDefaultModel();
         Model store =  TripleStoreService.getInstance().getModel();
         memModel.read(in, null);
-        store.union(memModel);
+        StmtIterator iter = memModel.listStatements();
+        while (iter.hasNext()){
+            store.add(iter.nextStatement());
+        }
     }
 }

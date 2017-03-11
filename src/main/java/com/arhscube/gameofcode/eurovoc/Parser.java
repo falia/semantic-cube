@@ -25,7 +25,7 @@ public class Parser {
 	private static Logger log = LoggerFactory.getLogger(Parser.class);;
 
 	public enum LANG {
-		DE, EN, FR
+		DE, EN, FR, PT
 	};
 
 	private static final Map<LANG, HashMap<String, List<Term>>> cache = new HashMap<>();

@@ -1,5 +1,6 @@
 package com.arhscube.gameofcode.datapublic;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -18,4 +19,5 @@ public class OpenDataset {
 	public String description;
 	public String author;
 	public List<String> keywords = new ArrayList<>();
+	public URL origin;
 }
