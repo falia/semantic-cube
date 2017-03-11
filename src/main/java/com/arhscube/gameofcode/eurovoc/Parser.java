@@ -17,13 +17,12 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.arhscube.gameofcode.TestEurovocIndexing;
 
 public class Parser {
 
 	private static SAXReader reader = new SAXReader();
 	private static final String TOKENIZER = "[ '/.,()]";
-	private static Logger log = LoggerFactory.getLogger(TestEurovocIndexing.class);;
+	private static Logger log = LoggerFactory.getLogger(Parser.class);;
 
 	public static HashMap<String, List<Term>> loadThesaurus(String resource) {
 		Document doc;
@@ -36,7 +35,7 @@ public class Parser {
 					log.info("Resolve public={} system={} ", publicId, systemId);
 					String resource = systemId.substring(systemId.lastIndexOf("/"));
 					log.info("get resource {} ", resource);
-					InputStream is = TestEurovocIndexing.class.getResourceAsStream(resource);
+					InputStream is = Parser.class.getResourceAsStream(resource);
 					log.info("resolved {} ", is);
 					return new InputSource(is);
 				}
