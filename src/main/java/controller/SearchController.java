@@ -1,9 +1,14 @@
 package controller;
 
+import com.arhscube.gameofcode.autocomplete.Autocomplete;
+import com.arhscube.gameofcode.eurovoc.Term;
+import com.google.gson.Gson;
 import model.DataSet;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +29,16 @@ public class SearchController {
 
         return "search";
 
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/autocomplete", method = RequestMethod.GET)
+    public String autocomplete(Map<String, Object> model, @RequestParam("term") String term, @RequestParam("lang") String lang,
+                               @RequestParam("callback") String callback) {
+        List<Term> terms = Autocomplete.getAutoComplete(term, lang);
+        System.out.println("hello from AutocompleteController");
+        String json = new Gson().toJson(terms);
+        return callback +"(" + json + ");";
     }
 
     public List<DataSet> mockDataSet() {

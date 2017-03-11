@@ -69,16 +69,16 @@ public class CreateLocalripleStoreTestT {
         assertNotEquals(size1, size2);
     }
 
-    @Test
-    public void loadEuroVocRdfTest(){
-        Model store =  TripleStoreService.getInstance().getModel();
-        SparqlService service = new SparqlServiceImpl();
-        long size1 = store.size();
-        service.addRdf2Model(Paths.get(new String("./target/test-classes/eurovoc_in_skos_core_concepts.rdf")));
-        long size2 = store.size();
-        service.flushSparqlQuery();
-        assertNotEquals(size1, size2);
-    }
+//    @Test
+//    public void loadEuroVocRdfTest(){
+//        Model store =  TripleStoreService.getInstance().getModel();
+//        SparqlService service = new SparqlServiceImpl();
+//        long size1 = store.size();
+//        service.addRdf2Model(Paths.get(new String("./target/test-classes/eurovoc_in_skos_core_concepts.rdf")));
+//        long size2 = store.size();
+//        service.flushSparqlQuery();
+//        assertNotEquals(size1, size2);
+//    } was one shot to fill the database
 
 
 }

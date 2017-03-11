@@ -64,7 +64,7 @@ public class Parser {
 		for (Element record : records) {
 			Term term = new Term();
 			term.id = record.element("DESCRIPTEUR_ID").getText();
-			term.libelle = record.element("LIBELLE").getText().toLowerCase();
+			term.label = record.element("LIBELLE").getText().toLowerCase();
 			ret.add(term);
 		}
 		records = DocumentHelper.createXPath("/USED_FOR/RECORD").selectNodes(useFor);
@@ -74,8 +74,8 @@ public class Parser {
 			for (Element ufEl : ufEls) {
 				Term term = new Term();
 				term.id = record.element("DESCRIPTEUR_ID").getText();
-				term.libelle = ufEl.getText().toLowerCase();
-				String firstWord = tokenize(term.libelle)[0];
+				term.label = ufEl.getText().toLowerCase();
+				String firstWord = tokenize(term.label)[0];
 				ret.add(term);
 			}
 		}
@@ -88,7 +88,7 @@ public class Parser {
 		}
 		HashMap<String, List<Term>> descriptors = new HashMap<>();
 		for (Term term : getAllTerms(lang)) {
-			String firstWord = tokenize(term.libelle)[0];
+			String firstWord = tokenize(term.label)[0];
 			if (!descriptors.containsKey(firstWord)) {
 				descriptors.put(firstWord, new ArrayList<>());
 			}
@@ -109,7 +109,7 @@ public class Parser {
 		for (String token : tokens) {
 			if (descriptors.containsKey(token)) {
 				for (Term t : descriptors.get(token)) {
-					if (string.indexOf(t.getLibelle()) > -1) {
+					if (string.indexOf(t.getLabel()) > -1) {
 						if (!ret.contains(t)) {
 							log.debug("found {} in thesaurus", t);
 							ret.add(t);

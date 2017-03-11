@@ -12,12 +12,14 @@
 
     <c:url value="/css/styles.css" var="jstlCss" />
     <link href="${jstlCss}" rel="stylesheet" />
+    <script type="text/javascript" src="webjars/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-</head>
+</head> 
 
 <body>
-<script type="text/javascript" src="webjars/jquery/3.1.1/jquery.min.js"></script>
-<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 
 <c:url value="/js/search.js" var="searchJs" />
 <script src="${searchJs}"></script>
@@ -27,7 +29,7 @@
 <div class="main container">
 
     <div class="starter-template">
-        <h1>Welcome to game of code test</h1>
+        <h1>Welcome to SemanticCube</h1>
     </div>
 
 </div>
