@@ -2,6 +2,8 @@ package controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
@@ -11,9 +13,10 @@ import java.util.Map;
 @Controller
 public class DataSetController
 {
-    @RequestMapping("/datasetupload")
+    @RequestMapping(value = "/datasetupload")
     public String welcome(Map<String, Object> model) {
-        System.out.println("hello from DataSetFormUploadController");
+        System.out.println("hello from DataSetController");
+
         return "dataSetUploadForm";
     }
 }

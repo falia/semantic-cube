@@ -10,4 +10,20 @@ $(document).ready(function(){
         });
     });
 
+    $("#searchField").autocomplete({
+        source: function( request, response ) {
+            $.ajax( {
+                url: "search/autocomplete",
+                dataType: "jsonp",
+                data: {
+                    term: request.term,
+                    lang: "fr"
+                },
+                success: function( data ) {
+                    response( data );
+                }
+            } );
+        },
+        minLength: 2
+    });
 });

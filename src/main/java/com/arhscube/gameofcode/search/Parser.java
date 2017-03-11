@@ -24,21 +24,21 @@ public class Parser {
 				return new SearchLiteral(search.split(" "), LITERAL_TYPE.STRING);
 			}
 			for (Term t : terms) {
-				int ind = search.indexOf(t.getLibelle());
+				int ind = search.indexOf(t.getLabel());
 				if (ind > -1) {
 					SearchLiteral l = new SearchLiteral(new String[] { t.getId() }, LITERAL_TYPE.EUROVOC);
-					if (ind == 0 && search.length() == t.getLibelle().length()) {
+					if (ind == 0 && search.length() == t.getLabel().length()) {
 						return l;
 					}
 					if (ind == 0) {
 						return new SearchOperator(l, OPERAND.AND,
-								parse(search.substring(t.getLibelle().length() + 1), lng));
+								parse(search.substring(t.getLabel().length() + 1), lng));
 					}
-					if (ind + t.getLibelle().length() == search.length()) {
+					if (ind + t.getLabel().length() == search.length()) {
 						return new SearchOperator(parse(search.substring(0, ind), lng), OPERAND.AND, l);
 					}
 					return new SearchOperator(parse(search.substring(0, ind), lng), OPERAND.AND, new SearchOperator(l,
-							OPERAND.AND, parse(search.substring(ind + t.getLibelle().length() + 1), lng)));
+							OPERAND.AND, parse(search.substring(ind + t.getLabel().length() + 1), lng)));
 				}
 
 			}
