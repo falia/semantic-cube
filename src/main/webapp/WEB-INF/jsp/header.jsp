@@ -19,6 +19,18 @@
                 <c:url value="/datasetupload" var="datasetupload"/>
                 <li><a href="${datasetupload}">DataSet Upload</a> </li>
             </ul>
+
+            <div class="col-sm-3 col-md-3 pull-right">
+                <div class="navbar-form">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="searchField" placeholder="Search">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="searchButton"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </nav>

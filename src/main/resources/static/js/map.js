@@ -28,11 +28,6 @@ fetch('http://wmts1.geoportail.lu/opendata/wmts/1.0.0/WMTSCapabilities.xml').the
     });
 });
 
-
-
-
-
-
 /*
 var osmTile = new ol.layer.Tile({
     source: new ol.source.OSM()
