@@ -4,9 +4,12 @@ import org.apache.jena.rdf.model.Model;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import service.SparqlService;
+import service.SparqlServiceImpl;
 import tripelstore.TripleStoreService;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -15,6 +18,20 @@ import static org.junit.Assert.assertNotNull;
 public class CreateLocalripleStoreTestT {
     /* The Logger */
     private static final Logger log = LoggerFactory.getLogger(CreateLocalripleStoreTestT.class);
+
+    private static final String TESTRDF = new String("<?xml version=\"1.0\"?>\n" +
+            "\n" +
+            "<rdf:RDF\n" +
+            "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
+            "xmlns:si=\"https://www.w3schools.com/rdf/\">\n" +
+            "\n" +
+            "<rdf:Description rdf:about=\"https://www.w3schools.com\">\n" +
+            "  <si:title>W3Schools</si:title>\n" +
+            "  <si:author>Jan Egil Refsnes</si:author>\n" +
+            "</rdf:Description>\n" +
+            "\n" +
+            "</rdf:RDF>");
+
 
 
     @Test
@@ -37,6 +54,19 @@ public class CreateLocalripleStoreTestT {
         Model store2 = TripleStoreService.getInstance().writeModelToFile();
         assertEquals(store, store2);
     }
+
+    @Test
+    public void updateModelWithRdfTestt(){
+        Model store =  TripleStoreService.getInstance().getModel();
+        long size1 = store.size();
+        SparqlService service = new SparqlServiceImpl();
+        service.addRdf2Model(TESTRDF);
+        Model store2 = TripleStoreService.getInstance().getModel();
+        long size2 = store2.size();
+        assertNotEquals(size1, size2);
+    }
+
+
 }
 
 
