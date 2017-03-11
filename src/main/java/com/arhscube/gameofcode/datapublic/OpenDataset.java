@@ -5,8 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.arhscube.gameofcode.eurovoc.Term;
-
 public class OpenDataset {
 	@Override
 	public String toString() {
@@ -16,7 +14,7 @@ public class OpenDataset {
 
 	public String title;
 	public List<Source> sources = new ArrayList<>();
-	public Set<Term> eurovoc = new HashSet<>();
+	public Set<String> eurovoc = new HashSet<>();
 	public String description;
 	public String author;
 	public List<String> keywords = new ArrayList<>();
