@@ -30,6 +30,13 @@ public class CreateLocalripleStoreTestT {
         Model store2 =  TripleStoreService.getInstance().getModel();
         assertEquals(store, store2);
     }
+
+    @Test
+    public void writeModel2FileTest(){
+        Model store =  TripleStoreService.getInstance().getModel();
+        Model store2 = TripleStoreService.getInstance().writeModelToFile();
+        assertEquals(store, store2);
+    }
 }
 
 
