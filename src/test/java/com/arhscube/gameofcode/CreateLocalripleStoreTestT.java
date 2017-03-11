@@ -74,7 +74,7 @@ public class CreateLocalripleStoreTestT {
         Model store =  TripleStoreService.getInstance().getModel();
         SparqlService service = new SparqlServiceImpl();
         long size1 = store.size();
-        service.addRdf2Model(Paths.get(new String("./eurovoc_in_skos_core_concepts.rdf")));
+        service.addRdf2Model(Paths.get(new String("./target/test-classes/eurovoc_in_skos_core_concepts.rdf")));
         long size2 = store.size();
         service.flushSparqlQuery();
         assertNotEquals(size1, size2);

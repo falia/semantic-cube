@@ -1,0 +1,743 @@
+@prefix : <http://publications.europa.eu/ontology/dcatap#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ns: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix ns1: <http://www.w3.org/2006/vcard/ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix wot: <http://xmlns.com/wot/0.1/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix spdx: <http://spdx.org/rdf/terms#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix voaf: <http://purl.org/vocommons/voaf#> .
+@prefix schema: <http://schema.org/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix powder-s: <http://www.w3.org/2007/05/powder-s#> .
+@base <http://publications.europa.eu/ontology/dcatap> .
+
+<http://publications.europa.eu/ontology/dcatap> rdf:type owl:Ontology ;
+                                                 owl:imports <http://www.w3.org/2006/vcard/ns> ,
+                                                             <http://www.w3.org/ns/dcat> ,
+                                                             foaf: ;
+                                                 dcterms:creator "Jean Delahousse of the behalf of the Open Data Portal team at EU Publications Office"@en ;
+                                                 rdfs:comment """Version 1.00 2017/01/29
+initial creation of the application DCAT application profile following on DCAT-AP-OP 1.1
+Foaf, vcard, dcat are imported. dcterms properties and classes are declared in this ontology when not already present in foaf, vcard or dcat. When dcat-ap creates a contextual label for a reused property, the labels is declared in class restriction annotations.
+For sdmx ontology, it was decided to declare the 2 properties and 1 class in this ontology and not to import the complete ontology, but this choice can be changed."""@en .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://www.w3.org/2002/07/owl#maxQualifiedCardinality
+owl:maxQualifiedCardinality rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://purl.org/dc/terms/accessRights
+dcterms:accessRights rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf dcterms:rights ;
+                     rdfs:range dcterms:RightsStatement .
+
+
+###  http://purl.org/dc/terms/conformsTo
+dcterms:conformsTo rdf:type owl:ObjectProperty ;
+                   rdfs:range rdfs:Resource ;
+                   rdfs:label "application profile"@en .
+
+
+###  http://purl.org/dc/terms/format
+dcterms:format rdfs:range dcterms:MediaTypeOrExtent .
+
+
+###  http://purl.org/dc/terms/frequency
+dcterms:frequency rdf:type owl:ObjectProperty ;
+                  rdfs:range dcterms:Frequency .
+
+
+###  http://purl.org/dc/terms/hasPart
+dcterms:hasPart owl:inverseOf dcterms:isPart ;
+                rdfs:label "has part"@en .
+
+
+###  http://purl.org/dc/terms/hasVersion
+dcterms:hasVersion rdf:type owl:ObjectProperty ;
+                   owl:inverseOf dcterms:isVersionOf ;
+                   rdfs:range dcat:Dataset .
+
+
+###  http://purl.org/dc/terms/isPart
+dcterms:isPart rdf:type owl:ObjectProperty ;
+               rdfs:label "is part"@en .
+
+
+###  http://purl.org/dc/terms/isVersionOf
+dcterms:isVersionOf rdf:type owl:ObjectProperty ;
+                    rdfs:range dcat:Dataset .
+
+
+###  http://purl.org/dc/terms/language
+dcterms:language rdf:type owl:ObjectProperty ;
+                 rdfs:range dcterms:LinguisticSystem ;
+                 rdfs:label "language"@en .
+
+
+###  http://purl.org/dc/terms/license
+dcterms:license rdf:type owl:ObjectProperty ;
+                rdfs:domain dcterms:LicenseDocument ;
+                rdfs:label "licence"@en .
+
+
+###  http://purl.org/dc/terms/provenance
+dcterms:provenance rdf:type owl:ObjectProperty .
+
+
+###  http://purl.org/dc/terms/publisher
+dcterms:publisher rdf:type owl:ObjectProperty ;
+                  rdfs:label "publisher"@en .
+
+
+###  http://purl.org/dc/terms/relation
+dcterms:relation rdf:type owl:ObjectProperty ;
+                 rdfs:range rdfs:Resource .
+
+
+###  http://purl.org/dc/terms/rights
+dcterms:rights rdf:type owl:ObjectProperty ;
+               rdfs:range dcterms:RightsStatement ;
+               rdfs:label "rights"@en .
+
+
+###  http://purl.org/dc/terms/source
+dcterms:source rdf:type owl:ObjectProperty ;
+               rdfs:label "source"@en .
+
+
+###  http://purl.org/dc/terms/spatial
+dcterms:spatial rdf:type owl:ObjectProperty ;
+                rdfs:range dcterms:Location ;
+                rdfs:label "spatial/geographic"@en .
+
+
+###  http://purl.org/dc/terms/temporal
+dcterms:temporal rdf:type owl:ObjectProperty ;
+                 rdfs:range dcterms:PeriodOfTime .
+
+
+###  http://purl.org/dc/terms/type
+dcterms:type rdf:type owl:ObjectProperty ;
+             rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> .
+
+
+###  http://spdx.org/rdf/terms#checksum
+spdx:checksum rdf:type owl:ObjectProperty ;
+              rdfs:range spdx:Checksum .
+
+
+###  http://www.w3.org/ns/adms#sample
+<http://www.w3.org/ns/adms#sample> rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://purl.org/dc/terms/description
+dcterms:description rdf:type owl:DatatypeProperty .
+
+
+###  http://purl.org/dc/terms/identifier
+dcterms:identifier rdf:type owl:DatatypeProperty .
+
+
+###  http://purl.org/dc/terms/issued
+dcterms:issued rdf:type owl:DatatypeProperty ;
+               rdfs:range xsd:dateTime .
+
+
+###  http://purl.org/dc/terms/modified
+dcterms:modified rdf:type owl:DatatypeProperty ;
+                 rdfs:range xsd:dateTime ;
+                 rdfs:label "update/ modification date"@en .
+
+
+###  http://purl.org/dc/terms/title
+dcterms:title rdf:type owl:DatatypeProperty .
+
+
+###  http://purl.org/dc/terms/titleCatalog
+dcterms:titleCatalog rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf dcterms:title ;
+                     rdfs:domain dcat:Catalog ;
+                     rdfs:range rdfs:Literal .
+
+
+###  http://schema.org/endDate
+schema:endDate rdf:type owl:DatatypeProperty ;
+               rdfs:range xsd:dateTime ;
+               rdfs:comment "end date"@en .
+
+
+###  http://schema.org/startDate
+schema:startDate rdf:type owl:DatatypeProperty ;
+                 rdfs:range xsd:dateTime ;
+                 rdfs:label "start date"@en .
+
+
+###  http://spdx.org/rdf/terms#algorithm
+spdx:algorithm rdf:type owl:DatatypeProperty ;
+               rdfs:domain spdx:Checksum ;
+               rdfs:range rdfs:Literal .
+
+
+###  http://spdx.org/rdf/terms#checksumValue
+spdx:checksumValue rdf:type owl:DatatypeProperty ;
+                   rdfs:domain spdx:Checksum ;
+                   rdfs:range xsd:hexBinary .
+
+
+###  http://www.w3.org/2002/07/owl#versionInfo
+owl:versionInfo rdf:type owl:DatatypeProperty .
+
+
+###  http://www.w3.org/ns/adms#versionNotes
+<http://www.w3.org/ns/adms#versionNotes> rdf:type owl:DatatypeProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://org.semanticweb.owlapi/error#Error13
+<http://org.semanticweb.owlapi/error#Error13> rdf:type owl:Class .
+
+
+###  http://org.semanticweb.owlapi/error#Error14
+<http://org.semanticweb.owlapi/error#Error14> rdf:type owl:Class .
+
+
+###  http://org.semanticweb.owlapi/error#Error15
+<http://org.semanticweb.owlapi/error#Error15> rdf:type owl:Class .
+
+
+###  http://purl.org/dc/terms/Frequency
+dcterms:Frequency rdf:type owl:Class .
+
+
+###  http://purl.org/dc/terms/LicenseDocument
+dcterms:LicenseDocument rdf:type owl:Class ;
+                        rdfs:subClassOf dcterms:RightsStatement .
+
+
+###  http://purl.org/dc/terms/LinguisticSystem
+dcterms:LinguisticSystem rdf:type owl:Class .
+
+
+###  http://purl.org/dc/terms/Location
+dcterms:Location rdf:type owl:Class .
+
+
+###  http://purl.org/dc/terms/MediaTypeOrExtent
+dcterms:MediaTypeOrExtent rdf:type owl:Class .
+
+
+###  http://purl.org/dc/terms/PeriodOfTime
+dcterms:PeriodOfTime rdf:type owl:Class ;
+                     rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                       owl:onProperty schema:endDate ;
+                                       owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:onDataRange xsd:dateTime
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty schema:startDate ;
+                                       owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:onDataRange xsd:dateTime
+                                     ] .
+
+
+###  http://purl.org/dc/terms/ProvenanceStatement
+dcterms:ProvenanceStatement rdf:type owl:Class .
+
+
+###  http://purl.org/dc/terms/RightsStatement
+dcterms:RightsStatement rdf:type owl:Class .
+
+
+###  http://purl.org/dc/terms/Standard
+dcterms:Standard rdf:type owl:Class .
+
+
+###  http://spdx.org/rdf/terms#Checksum
+spdx:Checksum rdf:type owl:Class ;
+              rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                owl:onProperty spdx:algorithm ;
+                                owl:cardinality "1"^^xsd:nonNegativeInteger
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty spdx:checksumValue ;
+                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                owl:onDataRange xsd:hexBinary
+                              ] .
+
+
+###  http://www.w3.org/2004/02/skos/core#Concept
+<http://www.w3.org/2004/02/skos/core#Concept> rdfs:label "Category"@en .
+
+
+###  http://www.w3.org/2004/02/skos/core#ConceptScheme
+<http://www.w3.org/2004/02/skos/core#ConceptScheme> rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty dcterms:title ;
+                                                                      owl:minCardinality "1"^^xsd:nonNegativeInteger
+                                                                    ] ;
+                                                    rdfs:label "Categorie scheme"@en .
+
+
+###  http://www.w3.org/ns/dcat#Catalog
+dcat:Catalog rdfs:subClassOf [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:hasPart ;
+                               owl:someValuesFrom dcat:Catalog
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:isPart ;
+                               owl:someValuesFrom dcat:Catalog
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:license ;
+                               owl:someValuesFrom dcterms:LicenseDocument
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:spatial ;
+                               owl:someValuesFrom dcterms:Location
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty foaf:homepage ;
+                               owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                               owl:onClass foaf:Document
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:publisher ;
+                               owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                               owl:onClass foaf:Agent
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:rights ;
+                               owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                               owl:onClass dcterms:RightsStatement
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:description ;
+                               owl:someValuesFrom rdfs:Literal
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:issued ;
+                               owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:modified ;
+                               owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                               owl:onDataRange xsd:dateTime
+                             ] .
+
+
+###  http://www.w3.org/ns/dcat#CatalogRecord
+dcat:CatalogRecord rdfs:subClassOf <http://org.semanticweb.owlapi/error#Error13> ,
+                                   <http://org.semanticweb.owlapi/error#Error15> ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty dcterms:language ;
+                                     owl:someValuesFrom dcterms:LinguisticSystem
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty foaf:primaryTopic ;
+                                     owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                     owl:onClass <http://purl.org/dc/dcmitype/Dataset>
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty dcterms:conformsTo ;
+                                     owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                     owl:onClass rdfs:Resource
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty dcterms:source ;
+                                     owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                     owl:onClass dcat:CatalogRecord
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty dcterms:description ;
+                                     owl:someValuesFrom rdfs:Literal
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty dcterms:title ;
+                                     owl:someValuesFrom rdfs:Literal
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty dcterms:modified ;
+                                     owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                     owl:onDataRange xsd:dateTime
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty dcterms:issued ;
+                                     owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                     owl:onDataRange xsd:dateTime
+                                   ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource dcat:CatalogRecord ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget <http://org.semanticweb.owlapi/error#Error13> ;
+   rdfs:label "change type"@en
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource dcat:CatalogRecord ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty dcterms:source ;
+                         owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onClass dcat:CatalogRecord
+                       ] ;
+   rdfs:label "source metadata"@en
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource dcat:CatalogRecord ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty dcterms:issued ;
+                         owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onDataRange xsd:dateTime
+                       ] ;
+   rdfs:label "listing date"@en
+ ] .
+
+
+###  http://www.w3.org/ns/dcat#Dataset
+dcat:Dataset rdfs:subClassOf [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:conformsTo ;
+                               owl:someValuesFrom dcterms:Standard
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:hasVersion ;
+                               owl:someValuesFrom dcat:Dataset
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:isVersionOf ;
+                               owl:someValuesFrom dcat:Dataset
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:language ;
+                               owl:someValuesFrom dcterms:LinguisticSystem
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:provenance ;
+                               owl:someValuesFrom dcterms:ProvenanceStatement
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:relation ;
+                               owl:someValuesFrom rdfs:Resource
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:source ;
+                               owl:someValuesFrom dcat:Dataset
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:spatial ;
+                               owl:someValuesFrom dcterms:Location
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:temporal ;
+                               owl:someValuesFrom dcterms:PeriodOfTime
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty <http://www.w3.org/ns/adms#sample> ;
+                               owl:someValuesFrom dcat:Distribution
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:publisher ;
+                               owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                               owl:onClass foaf:Agent
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:accessRights ;
+                               owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                               owl:onClass dcterms:RightsStatement
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:frequency ;
+                               owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                               owl:onClass dcterms:Frequency
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:rights ;
+                               owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                               owl:onClass dcterms:RightsStatement
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty foaf:Page ;
+                               owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                               owl:onClass foaf:Document
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:description ;
+                               owl:someValuesFrom rdfs:Literal
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:identifier ;
+                               owl:someValuesFrom rdfs:Literal
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty <http://www.w3.org/ns/adms#versionNotes> ;
+                               owl:someValuesFrom rdfs:Literal
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:title ;
+                               owl:minCardinality "1"^^xsd:nonNegativeInteger
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:issued ;
+                               owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                               owl:onDataRange xsd:dateTime
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty dcterms:modified ;
+                               owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                               owl:onDataRange xsd:dateTime
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty owl:versionInfo ;
+                               owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                             ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource dcat:Dataset ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty dcterms:relation ;
+                         owl:someValuesFrom rdfs:Resource
+                       ] ;
+   rdfs:label "related ressource"@en
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource dcat:Dataset ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty dcterms:source ;
+                         owl:someValuesFrom dcat:Dataset
+                       ] ;
+   rdfs:label "source"@en
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource dcat:Dataset ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty dcterms:spatial ;
+                         owl:someValuesFrom dcterms:Location
+                       ] ;
+   rdfs:label "spatial/ geographical coverage"@en
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource dcat:Dataset ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty dcterms:temporal ;
+                         owl:someValuesFrom dcterms:PeriodOfTime
+                       ] ;
+   rdfs:label "temporal coverage"@en
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource dcat:Dataset ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty dcterms:issued ;
+                         owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onDataRange xsd:dateTime
+                       ] ;
+   rdfs:comment "release date"@en
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource dcat:Dataset ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty owl:versionInfo ;
+                         owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                       ] ;
+   rdfs:label "version"@en
+ ] .
+
+
+###  http://www.w3.org/ns/dcat#Distribution
+dcat:Distribution rdfs:subClassOf <http://org.semanticweb.owlapi/error#Error14> ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty dcterms:conformsTo ;
+                                    owl:someValuesFrom dcterms:Standard
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty dcterms:language ;
+                                    owl:someValuesFrom dcterms:LinguisticSystem
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty foaf:page ;
+                                    owl:someValuesFrom foaf:Document
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty dcterms:format ;
+                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onClass dcterms:MediaTypeOrExtent
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty dcterms:license ;
+                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onClass dcterms:LicenseDocument
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty dcterms:rights ;
+                                    owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onClass dcterms:RightsStatement
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty dcterms:description ;
+                                    owl:someValuesFrom rdfs:Literal
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty dcterms:title ;
+                                    owl:someValuesFrom rdfs:Literal
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty dcterms:issued ;
+                                    owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onDataRange xsd:dateTime
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty dcterms:modified ;
+                                    owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onDataRange xsd:dateTime
+                                  ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource dcat:Distribution ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty dcterms:conformsTo ;
+                         owl:someValuesFrom dcterms:Standard
+                       ] ;
+   rdfs:comment "linked schemas"@en
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource dcat:Distribution ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty foaf:page ;
+                         owl:someValuesFrom foaf:Document
+                       ] ;
+   rdfs:label "documentation"@en
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource dcat:Distribution ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty dcterms:license ;
+                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onClass dcterms:LicenseDocument
+                       ] ;
+   rdfs:label "licence"@en
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource dcat:Distribution ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty dcterms:issued ;
+                         owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onDataRange xsd:dateTime
+                       ] ;
+   rdfs:label "release date"@en
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource dcat:Distribution ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty dcterms:modified ;
+                         owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onDataRange xsd:dateTime
+                       ] ;
+   rdfs:label "update/ modification date"@en
+ ] .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://publications.europa.eu/ontology/dcatap#CSV
+:CSV rdf:type owl:NamedIndividual ,
+              dcterms:MediaTypeOrExtent .
+
+
+###  http://publications.europa.eu/ontology/dcatap#data_alerts.csv
+:data_alerts.csv rdf:type owl:NamedIndividual ,
+                          dcat:Distribution ;
+                 dcat:mediaType :CSV ;
+                 dcterms:description "Optional information in case of one or more warnings (up to 4 possible): Avis de vent fort;Yellow;02;Lundi 15:00 à mardi <…> ; Information about an active avis d’alerte. Color: The colour of the vigilance (possible are : yellow, orange, red) Icon: The icon used for the vigilance Value: Free text. The text going with the vigilance Link: empty"@en ;
+                 dcterms:issued "2017-03-08"@en ;
+                 dcterms:modified "2017-03-08"@en ;
+                 dcterms:title "data_alerts.csv"@en .
+
+
+###  http://publications.europa.eu/ontology/dcatap#meteolux-weather-warnings-of-the-grand-duchy-of-luxembourg
+:meteolux-weather-warnings-of-the-grand-duchy-of-luxembourg rdf:type owl:NamedIndividual ,
+                                                                     dcat:Dataset ;
+                                                            dcat:distribution :data_alerts.csv ;
+                                                            dcterms:description """Filename: data_alerts.csv Contents in short words: Information about alerts and warnings Example of content:
+
+sep=; Semicolon separated file separator indication
+
+created;17-12-2015 13:50:51 File creation indication in local time
+
+DESCRIPTION;COLOR;ICON;VALUE;LINK The header of the values to follow
+
+vigilance_nord;green;;Pas de vigilance particulière The vigilance information for the northern region of the country. Color: The colour of the vigilance (possible are : green, yellow, orange, red), green if none Icon: The icon used for the vigilance (empty if none) Value: The text going with the vigilance (“Pas de vigilance particulière” if none) Link: Internal website link.
+
+vigilance_sud;green;;Pas de vigilance particulière Same as for the line above just for the southern region.
+
+Optional information in case of one or more warnings (up to 4 possible): Avis de vent fort;Yellow;02;Lundi 15:00 à mardi <…> ; Information about an active avis d’alerte. Color: The colour of the vigilance (possible are : yellow, orange, red) Icon: The icon used for the vigilance Value: Free text. The text going with the vigilance Link: empty
+
+Optional information in case of an “Etat de la route” warning Etat des routes;;05;Risque d’aquaplaning. En seconde <…> ; Information about an active etat de la route. Color: always empty. An “etat de la route” warning has no color. Icon: The icon used for the etat. Always 05, because this icon shows the sign for slippery roads Value: Free text. The text going with the etat Link: empty"""@en ;
+                                                            dcterms:issued "2016-05-26"@en ;
+                                                            dcterms:modified "2017-03-08"@en ;
+                                                            dcterms:title "MeteoLux - Weather warnings for the Grand-Duchy of Luxembourg"@en ;
+                                                            ns1:category "Environment"@en ,
+                                                                         "Meteorology"@en ,
+                                                                         "Weather"@en ,
+                                                                         "Wheather"@en .
+
+
+[ owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger
+] .
+
+[ owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger
+ ] .
+
+[ owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger
+ ] .
+
+#################################################################
+#    Annotations
+#################################################################
+
+<http://www.w3.org/ns/adms#identifier> rdfs:label "other identifier"@en .
+
+
+###  Generated by the OWL API (version 4.2.6.20160910-2108) https://github.com/owlcs/owlapi

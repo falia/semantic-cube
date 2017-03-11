@@ -23,7 +23,7 @@ public class TripleStoreService {
 
     private static final Logger log = LoggerFactory.getLogger(TripleStoreService.class);
 
-    private static final String OWL_FILE = new String("./GoC_example.owl");
+    private static final String OWL_FILE = new String("./GoC_example.ttl");
 
     private Model model = RDFDataMgr.loadModel(OWL_FILE) ;
 
@@ -51,7 +51,7 @@ public class TripleStoreService {
     public Model writeModelToFile(){
         Path newFile = Paths.get(OWL_FILE);
         try (OutputStream out = new FileOutputStream(newFile.toFile())) {
-            model.write( out, "RDF/XML-ABBREV" );
+            model.write( out, "TTL" );
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }

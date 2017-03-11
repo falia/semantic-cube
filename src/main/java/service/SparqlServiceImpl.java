@@ -50,6 +50,7 @@ public class SparqlServiceImpl implements SparqlService{
     }
     @Override
     public void addRdf2Model(Path rdfFilePath){
+        File file = rdfFilePath.toFile();
         try (InputStream in = new FileInputStream(rdfFilePath.toFile())) {
             this.addRdf2Model(in);
         } catch (IOException e) {
