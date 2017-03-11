@@ -13,7 +13,7 @@
     <c:url value="/css/styles.css" var="jstlCss" />
     <link href="${jstlCss}" rel="stylesheet" />
 
-</head>
+</head> 
 
 <body>
 <script type="text/javascript" src="webjars/jquery/3.1.1/jquery.min.js"></script>
@@ -27,7 +27,7 @@
 <div class="main container">
 
     <div class="starter-template">
-        <h1>Welcome to game of code test</h1>
+        <h1>Welcome to SemanticCube</h1>
     </div>
 
 </div>
