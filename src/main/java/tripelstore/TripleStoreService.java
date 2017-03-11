@@ -9,12 +9,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 /**
  * Created by borellda on 3/11/2017.
  */
 public class TripleStoreService {
 
-    private Model model = RDFDataMgr.loadModel("./GoC_example.owl") ;
+    private static final Logger log = LoggerFactory.getLogger(TripleStoreService.class);
+
+    private static final String OWL_FILE = new String("./GoC_example.owl");
+
+    private Model model = RDFDataMgr.loadModel(OWL_FILE) ;
 
     private static volatile  TripleStoreService INSTANCE = null;
 
@@ -35,5 +46,15 @@ public class TripleStoreService {
 
     public Model getModel(){
         return this.model;
+    }
+
+    public Model writeModelToFile(){
+        Path newFile = Paths.get(OWL_FILE);
+        try (OutputStream out = new FileOutputStream(newFile.toFile())) {
+            model.write( out, "RDF/XML-ABBREV" );
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        }
+        return model;
     }
 }
