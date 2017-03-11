@@ -12,14 +12,28 @@ import org.springframework.stereotype.Service;
 /**
  * Created by borellda on 3/11/2017.
  */
-public enum TripleStoreService {
+public class TripleStoreService {
 
-    STORE {
-        @Override
-        public Model getModel(){
-            return RDFDataMgr.loadModel("./GoC_example.owl") ;
+    private Model model = RDFDataMgr.loadModel("./GoC_example.owl") ;
+
+    private static volatile  TripleStoreService INSTANCE = null;
+
+    private TripleStoreService() {
+    }
+
+    public static TripleStoreService getInstance(){
+        TripleStoreService result = INSTANCE;
+        if (result == null) { // First check (no locking)
+            synchronized(TripleStoreService.class) {
+                result = INSTANCE;
+                if (result == null) // Second check (with locking)
+                    INSTANCE = result = new TripleStoreService();
+            }
         }
-    };
+        return result;
+    }
 
-    public abstract Model getModel();
+    public Model getModel(){
+        return this.model;
+    }
 }
