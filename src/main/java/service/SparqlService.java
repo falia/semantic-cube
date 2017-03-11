@@ -1,6 +1,7 @@
 package service;
 
 import org.apache.jena.query.ResultSet;
+import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Statement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,8 +24,9 @@ public interface SparqlService {
 
     void addRdf2Model(Path rdfFilePath);
 
-    default void flushSparqlQuery(){
-        TripleStoreService.getInstance().writeModelToFile();
+    default Model flushSparqlQuery(){
+        return TripleStoreService.getInstance().writeModelToFile();
+
     }
 
 

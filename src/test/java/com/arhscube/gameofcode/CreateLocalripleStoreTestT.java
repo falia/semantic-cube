@@ -8,6 +8,9 @@ import service.SparqlService;
 import service.SparqlServiceImpl;
 import tripelstore.TripleStoreService;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -56,13 +59,24 @@ public class CreateLocalripleStoreTestT {
     }
 
     @Test
-    public void updateModelWithRdfTestt(){
+    public void updateModelWithRdfTest(){
         Model store =  TripleStoreService.getInstance().getModel();
         long size1 = store.size();
         SparqlService service = new SparqlServiceImpl();
         service.addRdf2Model(TESTRDF);
         Model store2 = TripleStoreService.getInstance().getModel();
         long size2 = store2.size();
+        assertNotEquals(size1, size2);
+    }
+
+    @Test
+    public void loadEuroVocRdfTest(){
+        Model store =  TripleStoreService.getInstance().getModel();
+        SparqlService service = new SparqlServiceImpl();
+        long size1 = store.size();
+        service.addRdf2Model(Paths.get(new String("./eurovoc_in_skos_core_concepts.rdf")));
+        long size2 = store.size();
+        service.flushSparqlQuery();
         assertNotEquals(size1, size2);
     }
 
