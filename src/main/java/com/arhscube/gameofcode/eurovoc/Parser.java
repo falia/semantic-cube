@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -27,7 +28,14 @@ public class Parser {
 		DE, EN, FR
 	};
 
-	public static HashMap<String, List<Term>> loadThesaurus(LANG lang) {
+	private static final Map<LANG, HashMap<String, List<Term>>> cache = new HashMap<>();
+	private static final Map<LANG, List<Term>> cache2 = new HashMap<>();
+
+	public static List<Term> getAllTerms(LANG lang) {
+		if (cache2.containsKey(lang)) {
+			return cache2.get(lang);
+		}
+		List<Term> ret = new ArrayList<>();
 		Document terms;
 		Document useFor;
 		try {
@@ -36,48 +44,57 @@ public class Parser {
 				@Override
 				public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
 					log.info("Resolve public={} system={} ", publicId, systemId);
-					String resource = systemId.substring(systemId.lastIndexOf("/")+1);
+					String resource = systemId.substring(systemId.lastIndexOf("/") + 1);
 					log.info("get resource {} ", resource);
 					InputStream is = Parser.class.getResourceAsStream(resource);
 					log.info("resolved {} ", is);
 					return new InputSource(is);
 				}
 			});
-			terms= reader.read(Parser.class.getResourceAsStream("desc_"+lang.toString().toLowerCase()+".xml"));
-			useFor = reader.read(Parser.class.getResourceAsStream("uf_"+lang.toString().toLowerCase()+".xml"));
+			terms = reader.read(Parser.class.getResourceAsStream("desc_" + lang.toString().toLowerCase() + ".xml"));
+			useFor = reader.read(Parser.class.getResourceAsStream("uf_" + lang.toString().toLowerCase() + ".xml"));
 		} catch (DocumentException e) {
-			log.error("Can't load resource for '{}'",lang,e);
+			log.error("Can't load resource for '{}'", lang, e);
 			return null;
 		}
 		@SuppressWarnings("unchecked")
 		List<Element> records = DocumentHelper.createXPath("/DESCRIPTEUR/RECORD").selectNodes(terms);
 		log.info(" size = {}", records.size());
-		HashMap<String, List<Term>> descriptors = new HashMap<>();
+
 		for (Element record : records) {
 			Term term = new Term();
 			term.id = record.element("DESCRIPTEUR_ID").getText();
 			term.libelle = record.element("LIBELLE").getText().toLowerCase();
+			ret.add(term);
+		}
+		records = DocumentHelper.createXPath("/USED_FOR/RECORD").selectNodes(useFor);
+		log.info(" size = {}", records.size());
+		for (Element record : records) {
+			List<Element> ufEls = DocumentHelper.createXPath("UF/UF_EL").selectNodes(record);
+			for (Element ufEl : ufEls) {
+				Term term = new Term();
+				term.id = record.element("DESCRIPTEUR_ID").getText();
+				term.libelle = ufEl.getText().toLowerCase();
+				String firstWord = tokenize(term.libelle)[0];
+				ret.add(term);
+			}
+		}
+		return ret;
+	}
+
+	public static HashMap<String, List<Term>> loadThesaurus(LANG lang) {
+		if (cache.containsKey(lang)) {
+			return cache.get(lang);
+		}
+		HashMap<String, List<Term>> descriptors = new HashMap<>();
+		for (Term term : getAllTerms(lang)) {
 			String firstWord = tokenize(term.libelle)[0];
 			if (!descriptors.containsKey(firstWord)) {
 				descriptors.put(firstWord, new ArrayList<>());
 			}
 			descriptors.get(firstWord).add(term);
 		}
-		records = DocumentHelper.createXPath("/USED_FOR/RECORD").selectNodes(useFor);
-		log.info(" size = {}", records.size());
-		for (Element record : records) {
-			List<Element> ufEls = DocumentHelper.createXPath("UF/UF_EL").selectNodes(record); 
-			for(Element ufEl : ufEls){
-				Term term = new Term();
-				term.id = record.element("DESCRIPTEUR_ID").getText();
-				term.libelle = ufEl.getText().toLowerCase();
-				String firstWord = tokenize(term.libelle)[0];
-				if (!descriptors.containsKey(firstWord)) {
-					descriptors.put(firstWord, new ArrayList<>());
-				}
-				descriptors.get(firstWord).add(term);
-			}
-		}
+		cache.put(lang, descriptors);
 		return descriptors;
 	}
 

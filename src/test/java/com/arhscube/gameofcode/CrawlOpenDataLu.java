@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.arhscube.gameofcode.datapublic.Crawler;
 
-public class CrawlOpenDataLu extends AbstractEurovocBasedTest {
+public class CrawlOpenDataLu {
 	static Logger log = LoggerFactory.getLogger(CrawlOpenDataLu.class);
 
 	@Test

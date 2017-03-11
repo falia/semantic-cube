@@ -19,9 +19,12 @@
 <script type="text/javascript" src="webjars/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<c:url value="/js/search.js" var="searchJs" />
+<script src="${searchJs}"></script>
+
 <%@ include file="header.jsp" %>
 
-<div class="container">
+<div class="main container">
 
     <div class="starter-template">
         <h1>Welcome to game of code test</h1>
