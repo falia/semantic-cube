@@ -16,7 +16,8 @@ import org.slf4j.LoggerFactory;
 public class Crawler {
 	private static final int TIMEOUT = 5 * 1000;
 	static Logger log = LoggerFactory.getLogger(Crawler.class);
-	public static  List<OpenDataset> crawlAPage(int page, boolean stopQuick) throws Exception {
+
+	public static List<OpenDataset> crawlAPage(int page, boolean stopQuick) throws Exception {
 		List<OpenDataset> ret = new ArrayList<>();
 		URL url = new URL("https://data.public.lu/en/datasets/?page=" + page);
 		try {
@@ -42,10 +43,12 @@ public class Crawler {
 		}
 		return ret;
 	}
+
 	public static OpenDataset getDataset(URL url) throws Exception {
 		OpenDataset ret = new OpenDataset();
 		try {
 			Document doc = Jsoup.parse(url, TIMEOUT);
+			ret.title = doc.title();
 			log.info("Doc '{}' parsed from '{}'", doc.title(), url);
 			StringBuilder description = new StringBuilder();
 			for (TextNode descr : doc.getElementsByAttributeValue("itemprop", "description").first()
@@ -70,13 +73,11 @@ public class Crawler {
 				Element a = dist.getElementsByAttributeValue("itemprop", "url").first();
 				String href = a.attr("href");
 				Source src = new Source();
-				src.format = dist.getElementsByAttributeValue("itemprop", "encodingFormat").first()
-						.attr("content");
-				src.description=dist.getElementsByAttributeValue("itemprop", "description").first()
-						.attr("content");
-				src.createdOn = dist.getElementsByAttributeValue("itemprop", "dateCreated").first().attr("content");
-				src.modifiedOn = dist.getElementsByAttributeValue("itemprop", "dateModified").first()
-						.attr("content");
+				src.format = getItemPropContent(dist, "encodingFormat");
+				src.description = getItemPropContent(dist, "description");
+				src.createdOn = getItemPropContent(dist, "dateCreated");
+				src.size = getItemPropContent(dist, "contentSize");
+				src.modifiedOn = getItemPropContent(dist, "dateModified");
 				src.link = new URL(href);
 				ret.sources.add(src);
 				log.info("Distro {} ", src);
@@ -88,4 +89,12 @@ public class Crawler {
 		return ret;
 	}
 
+	private static String getItemPropContent(Element el, String property) {
+		String ret = null;
+		Elements els = el.getElementsByAttributeValue("itemprop", property);
+		if (els != null && els.size() > 0) {
+			return els.first().attr("content");
+		}
+		return ret;
+	}
 }

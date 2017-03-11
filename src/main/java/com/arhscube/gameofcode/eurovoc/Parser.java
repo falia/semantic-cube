@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -27,7 +28,12 @@ public class Parser {
 		DE, EN, FR
 	};
 
+	private static final Map<LANG, HashMap<String, List<Term>>> cache = new HashMap<>();
+
 	public static HashMap<String, List<Term>> loadThesaurus(LANG lang) {
+		if (cache.containsKey(lang)) {
+			return cache.get(lang);
+		}
 		Document terms;
 		Document useFor;
 		try {
@@ -36,17 +42,17 @@ public class Parser {
 				@Override
 				public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
 					log.info("Resolve public={} system={} ", publicId, systemId);
-					String resource = systemId.substring(systemId.lastIndexOf("/")+1);
+					String resource = systemId.substring(systemId.lastIndexOf("/") + 1);
 					log.info("get resource {} ", resource);
 					InputStream is = Parser.class.getResourceAsStream(resource);
 					log.info("resolved {} ", is);
 					return new InputSource(is);
 				}
 			});
-			terms= reader.read(Parser.class.getResourceAsStream("desc_"+lang.toString().toLowerCase()+".xml"));
-			useFor = reader.read(Parser.class.getResourceAsStream("uf_"+lang.toString().toLowerCase()+".xml"));
+			terms = reader.read(Parser.class.getResourceAsStream("desc_" + lang.toString().toLowerCase() + ".xml"));
+			useFor = reader.read(Parser.class.getResourceAsStream("uf_" + lang.toString().toLowerCase() + ".xml"));
 		} catch (DocumentException e) {
-			log.error("Can't load resource for '{}'",lang,e);
+			log.error("Can't load resource for '{}'", lang, e);
 			return null;
 		}
 		@SuppressWarnings("unchecked")
@@ -66,8 +72,8 @@ public class Parser {
 		records = DocumentHelper.createXPath("/USED_FOR/RECORD").selectNodes(useFor);
 		log.info(" size = {}", records.size());
 		for (Element record : records) {
-			List<Element> ufEls = DocumentHelper.createXPath("UF/UF_EL").selectNodes(record); 
-			for(Element ufEl : ufEls){
+			List<Element> ufEls = DocumentHelper.createXPath("UF/UF_EL").selectNodes(record);
+			for (Element ufEl : ufEls) {
 				Term term = new Term();
 				term.id = record.element("DESCRIPTEUR_ID").getText();
 				term.libelle = ufEl.getText().toLowerCase();
@@ -78,6 +84,7 @@ public class Parser {
 				descriptors.get(firstWord).add(term);
 			}
 		}
+		cache.put(lang, descriptors);
 		return descriptors;
 	}
 
