@@ -31,7 +31,7 @@ public class CrawlOpenDataLu extends AbstractEurovocBasedTest {
 		List<Term> eurovoc = new ArrayList<>();
 		public String description;
 		public String author;
-		public List<String> keywords;
+		public List<String> keywords = new ArrayList<>();
 	}
 
 	public List<OpenDataset> crawlAPage(int page, boolean stopQuick) throws Exception {
