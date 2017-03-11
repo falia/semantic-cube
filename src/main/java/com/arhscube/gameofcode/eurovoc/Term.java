@@ -33,18 +33,18 @@ public class Term {
 		this.id = id;
 	}
 
-	public String getLibelle() {
-		return libelle;
+	public String getLabel() {
+		return label;
 	}
 
-	public void setLibelle(String libelle) {
-		this.libelle = libelle;
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 	@Override
 	public String toString() {
-		return "Term [id=" + id + ", libelle=" + libelle + "]";
+		return "Term [id=" + id + ", label=" + label + "]";
 	}
 
-	String id,libelle;
+	String id, label;
 }
