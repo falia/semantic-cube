@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.arhscube.gameofcode.eurovoc.Parser;
+import com.arhscube.gameofcode.eurovoc.Parser.LANG;
 import com.arhscube.gameofcode.eurovoc.Term;
 
 public abstract class AbstractEurovocBasedTest {
@@ -16,20 +17,20 @@ public abstract class AbstractEurovocBasedTest {
 	@Before
 	public void initDataFr() throws Exception {
 		log.info("Reading fr");
-		fr_descriptors = Parser.loadThesaurus("/desc_fr.xml");
+		fr_descriptors = Parser.loadThesaurus(LANG.FR);
 	}
 	HashMap<String, List<Term>> de_descriptors;
 	@Before
 	public void initDataDe() throws Exception {
 		log.info("Reading de");
-		de_descriptors = Parser.loadThesaurus("/desc_de.xml");
+		de_descriptors = Parser.loadThesaurus(LANG.DE);
 	}
 
 	HashMap<String, List<Term>> en_descriptors;
 	@Before
 	public void initDataEn() throws Exception {
 		log.info("Reading en");
-		en_descriptors = Parser.loadThesaurus("/desc_en.xml");
+		en_descriptors = Parser.loadThesaurus(LANG.EN);
 	}
 
 }
