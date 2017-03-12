@@ -17,7 +17,7 @@ public class Parser {
 		} else if (search.contains(" OR ")) {
 			int ind = search.indexOf(" OR ");
 			ret = new SearchOperator(parse(search.substring(0, ind), lng), OPERAND.OR,
-					parse(search.substring(ind + 5), lng));
+					parse(search.substring(ind + 4), lng));
 		} else {
 			List<Term> terms = EurovocAnalyser.analyse(search, lng);
 			if (terms.size() == 0) {

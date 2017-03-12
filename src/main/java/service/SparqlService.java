@@ -24,6 +24,8 @@ public interface SparqlService {
 
     void addRdf2Model(Path rdfFilePath);
 
+    boolean isQueryValid(String queryString);
+
     default Model flushSparqlQuery(){
         return TripleStoreService.getInstance().writeModelToFile();
 
