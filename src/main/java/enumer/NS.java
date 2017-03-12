@@ -7,7 +7,9 @@ public enum NS {
 
     DATA_SET("https://data.public.lu/en/dataset"),
 
-    DISTRIBUTION("https://data.public.lu/en/distribution");
+    DISTRIBUTION("https://data.public.lu/en/distribution"),
+
+    DCAT("http://www.w3.org/ns/dcat#");
 
     String url;
 

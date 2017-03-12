@@ -70,4 +70,14 @@ public class TripleStoreService {
         }
         return model;
     }
+
+    public Model writeOntModelToFile(){
+        Path newFile = Paths.get(OWL_FILE);
+        try (OutputStream out = new FileOutputStream(newFile.toFile())) {
+            model.write( out, "TTL" );
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        }
+        return model;
+    }
 }

@@ -3,12 +3,15 @@ package service;
 import enumer.NS;
 import model.Distribution;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.jena.datatypes.xsd.XSDDatatype;
 import org.apache.jena.ontology.Individual;
 import org.apache.jena.ontology.OntClass;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
+import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
 import org.springframework.stereotype.Service;
 import tripelstore.TripleStoreService;
 
@@ -18,7 +21,32 @@ import java.util.UUID;
 public class DistributionServiceImpl implements DistributionService {
 
     @Override
-    public Distribution create(Distribution distribution) {
+
+    public Resource create(Distribution distribution) {
+        Model model = TripleStoreService.getInstance().getModel();
+
+        Resource r = model.createResource(NS.DISTRIBUTION.getUrl() + "/" + UUID.randomUUID());
+
+        if(StringUtils.isNotEmpty(distribution.getDescription())) {
+            Property title = model.createProperty("http://purl.org/dc/terms/description");
+            r.addProperty(title, distribution.getDescription(), XSDDatatype.XSDstring);
+        }
+
+        if(StringUtils.isNotEmpty(distribution.getFormat())) {
+            Property title = model.createProperty("http://purl.org/dc/terms/format");
+            r.addProperty(title, distribution.getFormat(), XSDDatatype.XSDstring);
+        }
+
+        if(StringUtils.isNotEmpty(distribution.getDownloadURL())) {
+            Property title = model.createProperty("http://purl.org/dc/terms/downloadURL");
+            r.addProperty(title, distribution.getDownloadURL(), XSDDatatype.XSDstring);
+        }
+
+        return r;
+    }
+
+
+    public Distribution create2(Distribution distribution) {
         OntModel ontModel = TripleStoreService.getInstance().getOntModel();
 
         OntClass distributionClass = ontModel.getOntClass("http://www.w3.org/ns/dcat#Distribution");
