@@ -21,17 +21,8 @@
                         <a href="#" title="dataset" class="thumbnail"><img src="${datasetPng}" alt="dataset"></a>
                     </div>
 
-                    <!-- meta data -->
-                    <div class="col-xs-12 col-sm-12 col-md-2">
-                        <ul class="meta-search">
-                            <li><i class="glyphicon glyphicon-calendar"></i> <span>02/15/2014</span></li>
-                            <li><i class="glyphicon glyphicon-time"></i> <span>4:28 pm</span></li>
-                            <li><i class="glyphicon glyphicon-tags"></i> <span>People</span></li>
-                        </ul>
-                    </div>
-
                     <!-- title and description -->
-                    <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+                    <div class="col-xs-12 col-sm-12 col-md-9 excerpet">
                         <h3><a href="#" title=""><c:out value="${current.title}"/></a></h3>
                         <p><c:out value="${current.description}"/></p>
                     <span class="plus"><a href="#" title="Lorem ipsum"><i
