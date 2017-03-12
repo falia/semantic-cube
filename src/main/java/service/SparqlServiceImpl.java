@@ -6,7 +6,10 @@ import org.apache.jena.rdf.model.*;
 import org.apache.jena.vocabulary.VCARD;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.WebApplicationContext;
 import tripelstore.TripleStoreService;
 
 import java.io.*;
@@ -19,6 +22,7 @@ import java.util.List;
  * Created by borellda on 3/11/2017.
  */
 @Service
+@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class SparqlServiceImpl implements SparqlService{
     /* The Logger */
     private static final Logger log = LoggerFactory.getLogger(SparqlServiceImpl.class);
@@ -50,6 +54,7 @@ public class SparqlServiceImpl implements SparqlService{
     }
     @Override
     public void addRdf2Model(Path rdfFilePath){
+        log.info(rdfFilePath.toAbsolutePath().toString());
         File file = rdfFilePath.toFile();
         try (InputStream in = new FileInputStream(rdfFilePath.toFile())) {
             this.addRdf2Model(in);

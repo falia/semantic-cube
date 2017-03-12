@@ -1,10 +1,11 @@
 package service;
 
 import model.Distribution;
+import org.apache.jena.rdf.model.Resource;
 
 public interface DistributionService {
 
-    public Distribution create(Distribution distribution);
+    public Resource create(Distribution distribution);
 
     public Distribution update(Distribution distribution);
 

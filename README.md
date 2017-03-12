@@ -12,7 +12,9 @@ The application runs  with Java 8.
 
 To check if Java 8 is installed on your machinem open a terminal and type:
 
-`java -version`
+``` commandline
+java -version
+```
 
 should give something like
 
