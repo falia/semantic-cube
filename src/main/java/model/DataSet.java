@@ -71,4 +71,12 @@ public class DataSet {
     public void setUrl(URL url) {
         this.url = url;
     }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
 }
