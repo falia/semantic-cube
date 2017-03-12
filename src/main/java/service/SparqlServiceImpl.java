@@ -24,6 +24,17 @@ public class SparqlServiceImpl implements SparqlService{
     private static final Logger log = LoggerFactory.getLogger(SparqlServiceImpl.class);
 
     @Override
+    public boolean isQueryValid(String queryString) {
+        try {
+            Query query = QueryFactory.create(queryString) ;
+            return true;
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
     public ResultSet readSparqlQuery(String queryString) {
         Model store =  TripleStoreService.getInstance().getModel();
         Query query = QueryFactory.create(queryString) ;

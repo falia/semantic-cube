@@ -32,7 +32,7 @@ public class TestIntegrationDataset {
 
     @Test
     public void importFromWebSite() throws Exception {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 20; i++) {
             DateFormat df = new SimpleDateFormat("YYYY-MM-DD'T'HH:mm:SS.SSSSSS");
             for (OpenDataset dataset : Crawler.crawlAPage(i, false)) {
                 EurovocAnalyser.analyse(dataset, LANG.EN, LANG.FR, LANG.DE);
@@ -41,6 +41,7 @@ public class TestIntegrationDataset {
                 rdfDataset.setTitle(dataset.title);
                 rdfDataset.setPublisher(dataset.author);
 
+                rdfDataset.getEurovocUris().addAll(dataset.eurovoc);
 
                 List<Distribution> dists = new ArrayList<>();
                 for (Source src : dataset.sources) {

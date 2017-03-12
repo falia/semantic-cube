@@ -31,6 +31,10 @@ public class DataSetServiceImp implements DataSetService {
 
         Resource r = model.createResource(NS.DATA_SET.getUrl() + "/" + UUID.randomUUID());
 
+        Resource dataSetResource = model.getResource("http://www.w3.org/ns/dcat#Dataset");
+        Property type = model.createProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
+        r.addProperty(type, dataSetResource);
+
         if(StringUtils.isNotEmpty(dataSet.getTitle())) {
             Property title = model.createProperty("http://purl.org/dc/terms/title");
             r.addProperty(title, dataSet.getTitle(), XSDDatatype.XSDstring);

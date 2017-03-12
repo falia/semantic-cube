@@ -149,7 +149,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
+           <!-- <plugin>
                 <groupId>org.apache.jena</groupId>
                 <artifactId>jena-maven-tools</artifactId>
                 <version>3.1.0</version>
@@ -172,7 +172,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
 
         </plugins>
     </build>

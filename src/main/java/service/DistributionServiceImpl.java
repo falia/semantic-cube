@@ -27,6 +27,10 @@ public class DistributionServiceImpl implements DistributionService {
 
         Resource r = model.createResource(NS.DISTRIBUTION.getUrl() + "/" + UUID.randomUUID());
 
+        Resource distributionResource = model.getResource("http://www.w3.org/ns/dcat#Distribution");
+        Property type = model.createProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
+        r.addProperty(type, distributionResource);
+
         if(StringUtils.isNotEmpty(distribution.getDescription())) {
             Property title = model.createProperty("http://purl.org/dc/terms/description");
             r.addProperty(title, distribution.getDescription(), XSDDatatype.XSDstring);
