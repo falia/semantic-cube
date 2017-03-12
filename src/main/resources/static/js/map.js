@@ -1,11 +1,4 @@
 
-$( document ).ready(function() {
-    $(function(){
-        $('.selectpicker').selectpicker();
-    });
-});
-
-
 var parser = new ol.format.WMTSCapabilities();
 var map;
 

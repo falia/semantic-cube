@@ -14,9 +14,9 @@ public class DataSet {
 
     private String publisher;
 
-    private List<Distribution> distributionList;
+    private List<Distribution> distributionList = new ArrayList<>();
 
-    private List<String> eurovocUris;
+    private List<String> eurovocUris = new ArrayList<>();
 
     public String getTitle() {
         return title;
@@ -43,9 +43,6 @@ public class DataSet {
     }
 
     public List<Distribution> getDistributionList() {
-        if(distributionList == null) {
-            this.distributionList = new ArrayList<>();
-        }
         return distributionList;
     }
 
@@ -54,9 +51,6 @@ public class DataSet {
     }
 
     public List<String> getEurovocUris() {
-        if(eurovocUris == null) {
-            this.eurovocUris = new ArrayList<>();
-        }
         return eurovocUris;
     }
 
