@@ -4,6 +4,9 @@ import java.util.Date;
 
 public class Distribution {
 
+
+    private String type;
+
     private String description;
 
     private String downloadURL;
@@ -15,6 +18,9 @@ public class Distribution {
     private Date issued;
 
     private Date modified;
+
+    public Distribution() {
+    }
 
     public Distribution(String description, String downloadURL, String format, long byteSize, Date issued, Date modified) {
         this.description = description;
@@ -72,4 +78,13 @@ public class Distribution {
     public void setModified(Date modified) {
         this.modified = modified;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
 }
