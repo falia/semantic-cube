@@ -31,7 +31,11 @@
         <input class="title form-control" type="text" name="title"><br>
         <div>DataSet description:</div>
         <input class="descr form-control" type="text" name="description"><br>
-        <fieldset id="dataFieldSet">
+        <div>Publisher:</div>
+        <input class="form-control" type="text" name="publisher"><br>
+        <div>Theme</div>
+        <input class="form-control" type="text" name="theme"><br>
+        <fieldset id="dataFieldSet" class="fieldset">
             <div>
                 Datasource:
             </div>
@@ -43,6 +47,18 @@
                 URL:
             </div>
             <input class="url form-control" type="text" name="url1"><br>
+            <div>
+                Description:
+            </div>
+            <input class="datadescr form-control" type="text" name="descr1"><br>
+            <div>
+                Format:
+            </div>
+            <input class="format form-control" type="text" name="format1"><br>
+            <div>
+                Size:
+            </div>
+            <input class="size form-control" type="text" name="size1"><br>
         </fieldset>
         <div id="addsource" class="dataSetButton">New Datasource</div>
         <fieldset id="tags">
