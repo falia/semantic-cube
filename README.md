@@ -39,6 +39,17 @@ The application starts a Tomcat web server and is available on
 
 [http://localhost:8080]
 
+##API
+The search into the dataSets can be accessed via the url /search/api with the following parameters:
+1. lang : the language in which the search is done.
+2. format : the format of the expected response (csd|xml|json).
+3. term : the term researched
+
+Sample call : 
+``` commandline
+/search/api?lang=fr&search=eau&format=csv
+```
+
 ## Contributing
 
 1. Fork it!
