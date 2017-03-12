@@ -43,7 +43,7 @@ The application starts a Tomcat web server and is available on
 The search into the dataSets can be accessed via the url /search/api with the following parameters:
 1. lang : the language in which the search is done.
 2. format : the format of the expected response (csd|xml|json).
-3. term : the term researched
+3. search : the term researched
 
 Sample call : 
 ``` commandline
