@@ -32,9 +32,10 @@ public class SearchController {
 	private SparqlService sparqlService;
 
 	@RequestMapping("/find")
-	public String search(Map<String, Object> model, @RequestParam("search") String search) {
+	public String search(Map<String, Object> model, @RequestParam("search") String search,@RequestParam("lang") String lang) {
 		System.out.println("In SearchController.search()");
-		SearchTree st = Parser.parse(search, LANG.FR);
+		LANG language = com.arhscube.gameofcode.eurovoc.Parser.getLangCode(lang);
+		SearchTree st = Parser.parse(search, language);
 		String sparql = Sparql.toSparql(st);
 System.out.println(sparql);
 		List<DataSet> dataSetList = new ArrayList<>();

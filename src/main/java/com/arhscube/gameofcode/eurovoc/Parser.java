@@ -22,11 +22,22 @@ public class Parser {
 
 	private static SAXReader reader = new SAXReader();
 	private static final String TOKENIZER = "[ '/.,()]";
-	private static Logger log = LoggerFactory.getLogger(Parser.class);;
+	private static Logger log = LoggerFactory.getLogger(Parser.class);
+
 
 	public enum LANG {
 		DE, EN, FR, PT
 	};
+
+	public static LANG getLangCode(String lang){
+		switch (lang){
+			case "fr": return Parser.LANG.FR;
+			case "de": return Parser.LANG.DE;
+			case "en": return Parser.LANG.EN;
+			case "pt": return Parser.LANG.PT;
+			default:return LANG.EN;
+		}
+	}
 
 	private static final Map<LANG, HashMap<String, List<Term>>> cache = new HashMap<>();
 	private static final Map<LANG, List<Term>> cache2 = new HashMap<>();

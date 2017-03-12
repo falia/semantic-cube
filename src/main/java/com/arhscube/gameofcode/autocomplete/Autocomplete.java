@@ -13,14 +13,9 @@ import java.util.stream.Collectors;
  */
 public class Autocomplete {
     public static List<Term> getAutoComplete(@RequestParam("term") String term, @RequestParam("lang") String lang) {
-        List<Term> terms=new ArrayList<>();
-        switch (lang){
-            case "fr": terms= Parser.getAllTerms(Parser.LANG.FR);break;
-            case "de": terms=Parser.getAllTerms(Parser.LANG.DE);break;
-            case "en": terms=Parser.getAllTerms(Parser.LANG.EN);break;
-            case "pt": terms=Parser.getAllTerms(Parser.LANG.PT);break;
-            default:break;
-        }
+
+        Parser.LANG language = Parser.getLangCode(lang);
+        List<Term> terms=Parser.getAllTerms(language);
         List<Term>toAutocomplete = terms.stream().filter(p->p.getLabel().startsWith(term)).collect(Collectors.toList());
         return toAutocomplete;
     }
