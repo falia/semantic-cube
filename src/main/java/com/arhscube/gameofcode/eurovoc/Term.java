@@ -1,5 +1,6 @@
 package com.arhscube.gameofcode.eurovoc;
-public class Term {
+
+public class Term implements Comparable<Term> {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -47,4 +48,9 @@ public class Term {
 	}
 
 	String id, label;
+
+	@Override
+	public int compareTo(Term o) {
+		return o.getLabel().length() - getLabel().length();
+	}
 }

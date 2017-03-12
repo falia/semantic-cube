@@ -1,5 +1,6 @@
 package com.arhscube.gameofcode.search;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.arhscube.gameofcode.EurovocAnalyser;
@@ -23,6 +24,7 @@ public class Parser {
 			if (terms.size() == 0) {
 				return new SearchLiteral(search.split(" "), LITERAL_TYPE.STRING);
 			}
+			Collections.sort(terms);
 			for (Term t : terms) {
 				int ind = search.indexOf(t.getLabel());
 				if (ind > -1) {
