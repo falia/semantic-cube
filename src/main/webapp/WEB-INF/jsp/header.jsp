@@ -28,6 +28,13 @@
                             <button class="btn btn-default" id="searchButton"><i class="glyphicon glyphicon-search"></i></button>
                         </div>
                     </div>
+                    <select class="selectpicker" data-width="fit" id="countryselector">
+                        <option data-content='<span class="flag-icon flag-icon-gb"></span> English'>en</option>
+                        <option  data-content='<span class="flag-icon flag-icon-pt"></span> Portuguese'>pt</option>
+                        <option  data-content='<span class="flag-icon flag-icon-fr"></span> French'>fr</option>
+                        <option  data-content='<span class="flag-icon flag-icon-de"></span> German'>de</option>
+
+                    </select>
                 </div>
             </div>
 

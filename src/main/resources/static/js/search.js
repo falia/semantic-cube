@@ -10,6 +10,10 @@ $(document).ready(function(){
         });
     });
 
+    $(function(){
+        $('.selectpicker').selectpicker();
+    });
+
     $("#searchField").autocomplete({
         source: function( request, response ) {
             $.ajax( {
@@ -17,7 +21,7 @@ $(document).ready(function(){
                 dataType: "jsonp",
                 data: {
                     term: request.term,
-                    lang: "fr"
+                    lang: $('#countryselector').val()
                 },
                 success: function( data ) {
                     response( data );

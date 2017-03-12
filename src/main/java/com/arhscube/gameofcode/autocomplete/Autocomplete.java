@@ -18,6 +18,7 @@ public class Autocomplete {
             case "fr": terms= Parser.getAllTerms(Parser.LANG.FR);break;
             case "de": terms=Parser.getAllTerms(Parser.LANG.DE);break;
             case "en": terms=Parser.getAllTerms(Parser.LANG.EN);break;
+            case "pt": terms=Parser.getAllTerms(Parser.LANG.PT);break;
             default:break;
         }
         List<Term>toAutocomplete = terms.stream().filter(p->p.getLabel().startsWith(term)).collect(Collectors.toList());

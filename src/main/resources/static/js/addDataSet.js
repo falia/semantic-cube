@@ -2,6 +2,9 @@
  * Created by piraujo on 11/03/2017.
  */
 $( document ).ready(function() {
+    $(function(){
+        $('.selectpicker').selectpicker();
+    });
     var cptsource=2;
     var cpttag=3;
     $('#addsource').on("click", function () {
