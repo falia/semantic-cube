@@ -21,6 +21,14 @@ public class TestSearchParsing {
 	}
 
 	@Test
+	public void testLongThesaurusContainingThesaurus() {
+		String search = "eau de baignade";
+		SearchTree s = Parser.parse(search, LANG.FR);
+		log.debug("search = {}", s);
+		log.debug("Sparql {}", Sparql.toSparql(s));
+	}
+
+	@Test
 	public void testEurovocSecond() {
 		String search = "walferdange AND eau";
 		SearchTree s = Parser.parse(search, LANG.FR);
