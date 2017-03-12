@@ -34,7 +34,7 @@
 <div class="main container" id="dataset">
     <h2>Upload a new DataSet</h2>
 
-    <form:form action="{cp}/datasetupload" modelAttribute="dataset" method="post" id="datasetForm" cssClass="form-group">
+    <form:form action="/datasetupload" modelAttribute="dataset" method="post" id="datasetForm" cssClass="form-group">
             <div>DataSet title:</div>
             <input class="title form-control" type="text" name="title" th:field="${dataset.title}"/><br>
             <div>DataSet description:</div>
@@ -42,7 +42,7 @@
             <div>Publisher:</div>
             <input class="form-control" type="text" name="publisher" th:field="${dataset.publisher}"><br>
             <div>Theme</div>
-            <input class="form-control" type="text" id="themeSelect"  name="themeSelect" />
+            <input class="form-control" type="text" id="themeSelect"  name="themeSelect" >
 
 
             <ul id="distributionListContainer">

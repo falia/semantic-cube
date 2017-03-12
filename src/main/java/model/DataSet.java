@@ -1,5 +1,7 @@
 package model;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,13 @@ public class DataSet {
 
     public String getTitle() {
         return title;
+    }
+
+    public DataSet() {
+    }
+
+    public String getEurovocTokens(){
+        return String.format("%s %s %s", null != this.getTitle() ? this.getTitle() : "",  null != this.getDescription() ? this.getDescription() : "", StringUtils.join(this.getEurovocUris(), " "));
     }
 
     public void setTitle(String title) {

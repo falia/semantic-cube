@@ -1,5 +1,8 @@
 package service;
 
+import com.arhscube.gameofcode.EurovocAnalyser;
+import com.arhscube.gameofcode.eurovoc.Parser;
+import com.arhscube.gameofcode.eurovoc.Term;
 import enumer.NS;
 import model.DataSet;
 import model.Distribution;
@@ -17,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tripelstore.TripleStoreService;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -28,6 +32,10 @@ public class DataSetServiceImp implements DataSetService {
     @Override
     public DataSet create(DataSet dataSet) {
         Model model = TripleStoreService.getInstance().getModel();
+        List<Term> terms = EurovocAnalyser.analyse(dataSet.getEurovocTokens(), Parser.LANG.EN, Parser.LANG.FR, Parser.LANG.DE);
+        for (Term t : terms) {
+            dataSet.getEurovocUris().add(t.getId());
+        }
 
         Resource r = model.createResource(NS.DATA_SET.getUrl() + "/" + UUID.randomUUID());
 
@@ -65,7 +73,7 @@ public class DataSetServiceImp implements DataSetService {
 
     public DataSet create2(DataSet dataSet) {
         OntModel ontModel = TripleStoreService.getInstance().getOntModel();
-
+        EurovocAnalyser.analyse(dataSet, Parser.LANG.EN, Parser.LANG.FR, Parser.LANG.DE);
         OntClass dataSetClass = ontModel.getOntClass("http://www.w3.org/ns/dcat#Dataset");
         Individual instance = dataSetClass.createIndividual(NS.DATA_SET.getUrl() + "/" + UUID.randomUUID());
 
