@@ -3,6 +3,7 @@ package service;
 import enumer.NS;
 import model.DataSet;
 import model.Distribution;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.jena.ontology.Individual;
 import org.apache.jena.ontology.OntClass;
 import org.apache.jena.ontology.OntModel;
@@ -28,12 +29,16 @@ public class DataSetServiceImp implements DataSetService {
         OntClass dataSetClass = ontModel.getOntClass("http://www.w3.org/ns/dcat#Dataset");
         Individual instance = dataSetClass.createIndividual(NS.DATA_SET.getUrl() + "/" + UUID.randomUUID());
 
-        Property title = ontModel.getProperty("http://purl.org/dc/terms/title");
-        instance.addProperty(title, dataSet.getTitle());
+        if(StringUtils.isNotEmpty(dataSet.getTitle())) {
+            Property title = ontModel.getProperty("http://purl.org/dc/terms/title");
+            instance.addProperty(title, dataSet.getTitle());
+        }
 
-        Property description = ontModel.getProperty("http://purl.org/dc/terms/description");
-        instance.addProperty(description, dataSet.getDescription());
+        if(StringUtils.isNotEmpty(dataSet.getDescription())) {
+            Property description = ontModel.getProperty("http://purl.org/dc/terms/description");
+            instance.addProperty(description, dataSet.getDescription());
 
+        }
         for(String euroVoc : dataSet.getEurovocUris()) {
             Individual euroVocConcept = ontModel.getIndividual("http://eurovoc.europa.eu/" + euroVoc);
             if(euroVocConcept != null) {

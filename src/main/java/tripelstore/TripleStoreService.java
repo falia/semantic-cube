@@ -1,7 +1,10 @@
 package tripelstore;
 
+import org.apache.jena.ontology.OntModel;
+import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.tdb.TDBFactory;
 import org.slf4j.Logger;
@@ -29,6 +32,8 @@ public class TripleStoreService {
 
     private static volatile  TripleStoreService INSTANCE = null;
 
+    private OntModel ontModel;
+
     private TripleStoreService() {
     }
 
@@ -46,6 +51,14 @@ public class TripleStoreService {
 
     public Model getModel(){
         return this.model;
+    }
+
+    public OntModel getOntModel() {
+        if (ontModel == null) {
+            ontModel = ModelFactory.createOntologyModel(OntModelSpec.RDFS_MEM, model);
+        }
+
+        return ontModel;
     }
 
     public Model writeModelToFile(){
