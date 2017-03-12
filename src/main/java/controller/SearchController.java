@@ -1,11 +1,13 @@
 package controller;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import converter.RS2DatasetConverter;
 import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,6 +53,25 @@ System.out.println(sparql);
 		return "search";
 
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/api", method = RequestMethod.GET)
+	public String searchApi(@RequestParam("search") String search,@RequestParam("lang") String lang,@RequestParam("format") String format){
+		LANG language = com.arhscube.gameofcode.eurovoc.Parser.getLangCode(lang);
+		SearchTree st = Parser.parse(search, language);
+		String sparql = Sparql.toSparql(st);
+		ResultSet resultSet = sparqlService.readSparqlQuery(sparql);
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		switch (format){
+			case "json" : ResultSetFormatter.outputAsJSON(outputStream, resultSet); break;
+			case "xml": ResultSetFormatter.outputAsXML(outputStream, resultSet);break;
+			case "csv": ResultSetFormatter.outputAsCSV(outputStream, resultSet);break;
+			default:break;
+		}
+		return new String(outputStream.toByteArray());
+
+	}
+
 
 	@ResponseBody
 	@RequestMapping(value = "/autocomplete", method = RequestMethod.GET)
