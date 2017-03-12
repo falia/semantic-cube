@@ -42,3 +42,7 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
 .ui-autocomplete{
     background-color: white;
 }
+.fieldset{
+    border: 1px dotted black;
+    padding: 8px;
+}
