@@ -28,9 +28,6 @@
 <body>
 
 
-<c:url value="/js/search.js" var="searchJs" />
-<script src="${searchJs}"></script>
-
 <%@ include file="header.jsp" %>
 
 <div class="main container">

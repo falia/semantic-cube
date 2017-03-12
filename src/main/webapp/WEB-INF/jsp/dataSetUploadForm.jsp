@@ -13,6 +13,7 @@
 <head>
     <title>DataSet Upload</title>
     <script type="text/javascript" src="webjars/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
     <!-- Access the bootstrap Css like this,
         Spring boot will handle the resource mapping automcatically -->
     <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -29,7 +30,7 @@
 <script src="${addDataSet}"></script>
 <script src="${listHelper}"></script>
 <%@ include file="header.jsp" %>
-<div class="container" id="dataset">
+<div class="main container" id="dataset">
     <h2>Upload a new DataSet</h2>
     <form id="datasetForm" class="form-group" action="#" th:action="@{/datasetupload}" th:object="${dataset}" method="post">
         <div>DataSet title:</div>

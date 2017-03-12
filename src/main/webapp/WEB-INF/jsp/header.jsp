@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <nav class="navbar navbar-inverse">
+    <c:url value="/js/search.js" var="searchJs" />
+    <script src="${searchJs}"></script>
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">SemanticCube</a>
