@@ -8,7 +8,17 @@ import com.arhscube.gameofcode.eurovoc.Parser;
 import com.arhscube.gameofcode.eurovoc.Parser.LANG;
 import com.arhscube.gameofcode.eurovoc.Term;
 
+import model.DataSet;
+
 public class EurovocAnalyser {
+	public static void analyse(DataSet ds, LANG... langs) {
+		for (LANG lg : langs) {
+			for (Term t : Parser.findDescriptors(ds.getTitle() + " " + ds.getDescription(), Parser.loadThesaurus(lg))) {
+				ds.getEurovocUris().add(t.getId());
+			}
+		}
+	}
+
 	public static void analyse(OpenDataset ds, LANG... langs) {
 		for (LANG lg : langs) {
 			for (Term t : Parser.findDescriptors(ds.title + " " + ds.description, Parser.loadThesaurus(lg))) {
