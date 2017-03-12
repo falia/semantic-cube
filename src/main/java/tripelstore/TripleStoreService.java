@@ -7,6 +7,7 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.tdb.TDBFactory;
+import org.aspectj.weaver.ast.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -26,7 +28,7 @@ public class TripleStoreService {
 
     private static final Logger log = LoggerFactory.getLogger(TripleStoreService.class);
 
-    private static final String OWL_FILE = new String("./GoC_example.ttl");
+    private static final String OWL_FILE = new String("./target/classes/GoC_example.ttl");
 
     private Model model = RDFDataMgr.loadModel(OWL_FILE) ;
 
@@ -50,6 +52,9 @@ public class TripleStoreService {
     }
 
     public Model getModel(){
+        URL location = TripleStoreService.class.getProtectionDomain().getCodeSource().getLocation();
+        log.info(location.getFile());
+        log.info(Paths.get(OWL_FILE).toAbsolutePath().toString());
         return this.model;
     }
 
@@ -63,6 +68,7 @@ public class TripleStoreService {
 
     public synchronized Model writeModelToFile(){
         Path newFile = Paths.get(OWL_FILE);
+        log.info(newFile.toAbsolutePath().toString());
         try (OutputStream out = new FileOutputStream(newFile.toFile())) {
             model.write( out, "TTL" );
         } catch (IOException e) {

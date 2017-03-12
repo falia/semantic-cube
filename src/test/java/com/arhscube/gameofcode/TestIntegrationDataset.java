@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import config.SpringBootWebApplication;
 import org.junit.Test;
 
 import com.arhscube.gameofcode.datapublic.Crawler;
@@ -16,20 +15,9 @@ import com.arhscube.gameofcode.eurovoc.Parser.LANG;
 
 import model.DataSet;
 import model.Distribution;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import service.DataSetService;
 import tripelstore.TripleStoreService;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes= SpringBootWebApplication.class)
 public class TestIntegrationDataset {
-
-    @Autowired
-    private DataSetService dataSetService;
-
     @Test
     public void importFromWebSite() throws Exception {
         for (int i = 0; i < 20; i++) {
@@ -51,14 +39,11 @@ public class TestIntegrationDataset {
                             //df.parse(src.createdOn)
                             ,new Date()
                             //df.parse(src.modifiedOn)
-                    );
+                            );
                     dists.add(dist);
                 }
                 rdfDataset.setDistributionList(dists);
-
-                dataSetService.create(rdfDataset);
             }
-
         }
         TripleStoreService.getInstance().writeModelToFile();
     }

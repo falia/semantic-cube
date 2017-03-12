@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>DataSet Upload</title>
@@ -16,59 +17,91 @@
         Spring boot will handle the resource mapping automcatically -->
     <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
 
-    <c:url value="/css/styles.css" var="jstlCss" />
+    <spring:url value="/css/styles.css" var="jstlCss" />
     <link href="${jstlCss}" rel="stylesheet" />
 </head>
 <body>
-
-<c:url value="/js/addDataSet.js" var="addDataSet" />
+<spring:url value="/js/dynamic_list_helper.js" var="listHelper" />
+<spring:url value="/js/addDataSet.js" var="addDataSet" />
 <script src="${addDataSet}"></script>
+<script src="${listHelper}"></script>
 <%@ include file="header.jsp" %>
 <div class="container" id="dataset">
     <h2>Upload a new DataSet</h2>
-    <form id="datasetForm" class=".form-group">
+    <form id="datasetForm" class="form-group" action="#" th:action="@{/datasetupload}" th:object="${dataset}" method="post">
         <div>DataSet title:</div>
-        <input class="title form-control" type="text" name="title"><br>
+        <input class="title form-control" type="text" name="title" th:field="${dataset.title}"/><br>
         <div>DataSet description:</div>
-        <input class="descr form-control" type="text" name="description"><br>
+        <textarea class="descr form-control" type="textArea" name="description" th:field="${dataset.description}" /><br>
         <div>Publisher:</div>
-        <input class="form-control" type="text" name="publisher"><br>
+        <input class="form-control" type="text" name="publisher" th:field="${dataset.publisher}"><br>
         <div>Theme</div>
-        <input class="form-control" type="text" name="theme"><br>
-        <fieldset id="dataFieldSet" class="fieldset">
+        <input class="form-control" type="text" id="themeSelect"  name="themeSelect" />
+
+
+        <ul id="distributionListContainer"></ul>
+        <c:forEach items="${dataset.distributionList}" var="Distribution" varStatus="i" begin="0" >
+            <li class="distribution">
+        <fieldset  class="fieldset">
             <div>
                 Datasource:
             </div>
             <div>
                 Type:
             </div>
-            <input class="type form-control" type="text" name="type1"><br>
+            <input class="type form-control" type="text" name="resourceList[${i.index}].type" value=""><br>
             <div>
                 URL:
             </div>
-            <input class="url form-control" type="text" name="url1"><br>
+            <input class="url form-control" type="text" name="resourceList[${i.index}].url" value=""><br>
             <div>
                 Description:
             </div>
-            <input class="datadescr form-control" type="text" name="descr1"><br>
+            <input class="datadescr form-control" type="text" name="resourceList[${i.index}].descr" value=""><br>
             <div>
                 Format:
             </div>
-            <input class="format form-control" type="text" name="format1"><br>
+            <input class="format form-control" type="text" name="resourceList[${i.index}].format" value=""><br>
             <div>
                 Size:
             </div>
-            <input class="size form-control" type="text" name="size1"><br>
+            <input class="size form-control" type="text" name="resourceList[${i.index}].size" value=""><br>
         </fieldset>
-        <div id="addsource" class="dataSetButton">New Datasource</div>
-        <fieldset id="tags">
-            <div>
-                Tag:
-            </div>
-            <input class="tag form-control" type="text" name="tag1"><br>
-        </fieldset>
-        <div id="addTag" class="dataSetButton">New Tag</div>
-        <div id="submitButton" class="dataSetButton">Submit</div>
+            </li>
+        </c:forEach>
+        <c:if test="${dataset.distributionList.size() == 0}">
+        <li class="distribution defaultRow">
+            <fieldset  class="fieldset">
+                <div>
+                    Datasource:
+                </div>
+                <div>
+                    Type:
+                </div>
+                <input class="type form-control" type="text" name="resourceList[].type" value=""><br>
+                <div>
+                    URL:
+                </div>
+                <input class="url form-control" type="text" name="resourceList[].url" value=""><br>
+                <div>
+                    Description:
+                </div>
+                <input class="datadescr form-control" type="text" name="resourceList[].descr" value=""><br>
+                <div>
+                    Format:
+                </div>
+                <input class="format form-control" type="text" name="resourceList[].format" value=""><br>
+                <div>
+                    Size:
+                </div>
+                <input class="size form-control" type="text" name="resourceList[].size" value=""><br>
+            </fieldset>
+        </li>
+        </c:if>
+        </ul>
+        <div id="addsource" class="dataSetButton">New Resource</div>
+
+        <input type="submit" id="submitButton" class="dataSetButton"/>
     </form>
 </div>
 

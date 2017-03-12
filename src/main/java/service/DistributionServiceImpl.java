@@ -21,7 +21,6 @@ import java.util.UUID;
 public class DistributionServiceImpl implements DistributionService {
 
     @Override
-
     public Resource create(Distribution distribution) {
         Model model = TripleStoreService.getInstance().getModel();
 
@@ -48,6 +47,7 @@ public class DistributionServiceImpl implements DistributionService {
 
         return r;
     }
+
 
 
     public Distribution create2(Distribution distribution) {
