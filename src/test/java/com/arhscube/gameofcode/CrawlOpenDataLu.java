@@ -20,8 +20,10 @@ public class CrawlOpenDataLu {
 
 	@Test
 	public void crawlAllPages() throws Exception {
+		int datasets = 0;
 		for (int page = 1; page <= 20; page++)
-			Crawler.crawlAPage(page, false);
+			datasets += Crawler.crawlAPage(page, false).size();
+		log.info("Crawled {} datasets", datasets);
 	}
 
 	@Test
