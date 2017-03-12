@@ -36,10 +36,12 @@ public class DataSetController
     }
 
     @PostMapping(value = "/datasetupload")
-    public String addDataset(@ModelAttribute DataSet ds, String themes){
-        List<String> list =Arrays.stream(themes.split(" ")).collect(Collectors.toList());
-        ds.setEurovocUris(list);
-        datasetService.create(ds);
+    public String addDataset(@ModelAttribute DataSet dataset, @RequestParam("themeSelect")String themes){
+        if(null != themes ) {
+            List<String> list = Arrays.stream(themes.split(" ")).collect(Collectors.toList());
+            dataset.setEurovocUris(list);
+        }
+        datasetService.create(dataset);
         return "index";
     }
 }
