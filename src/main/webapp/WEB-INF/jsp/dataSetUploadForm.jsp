@@ -30,13 +30,13 @@
     <h2>Upload a new DataSet</h2>
     <form id="datasetForm" class="form-group" action="#" th:action="@{/datasetupload}" th:object="${dataset}" method="post">
         <div>DataSet title:</div>
-        <input class="title form-control" type="text" name="title" th:field="${dataset.title}"><br>
+        <input class="title form-control" type="text" name="title" th:field="${dataset.title}"/><br>
         <div>DataSet description:</div>
-        <input class="descr form-control" type="textArea" name="description" th:field="${dataset.description}"><br>
+        <textarea class="descr form-control" type="textArea" name="description" th:field="${dataset.description}" /><br>
         <div>Publisher:</div>
         <input class="form-control" type="text" name="publisher" th:field="${dataset.publisher}"><br>
         <div>Theme</div>
-        <input  type="text" id="themeSelect"  name="themeSelect" />
+        <input class="form-control" type="text" id="themeSelect"  name="themeSelect" />
 
 
         <ul id="distributionListContainer"></ul>
