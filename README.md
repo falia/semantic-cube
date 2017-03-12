@@ -1,6 +1,10 @@
-# Project Name
+# Semantic Cube
 
-TODO: Write a project description
+This projects aims to add 3 dimension to the public.data.lu database
+
+- Multilingual capacity through Eurovoc automatic indexation
+- Semantic Web browsing with DCAT AP
+- Sparql endpoint offering a standard integration point for other projects
 
 ## Prerequisites
 

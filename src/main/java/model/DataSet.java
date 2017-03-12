@@ -1,9 +1,12 @@
 package model;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataSet {
+
+    private URL url;
 
     private String title;
 
@@ -11,9 +14,9 @@ public class DataSet {
 
     private String publisher;
 
-    private String theme;
-
     private List<Distribution> distributionList;
+
+    private List<String> eurovocUris;
 
     public String getTitle() {
         return title;
@@ -39,14 +42,6 @@ public class DataSet {
         this.publisher = publisher;
     }
 
-    public String getTheme() {
-        return theme;
-    }
-
-    public void setTheme(String theme) {
-        this.theme = theme;
-    }
-
     public List<Distribution> getDistributionList() {
         if(distributionList == null) {
             this.distributionList = new ArrayList<>();
@@ -56,5 +51,24 @@ public class DataSet {
 
     public void setDistributionList(List<Distribution> distributionList) {
         this.distributionList = distributionList;
+    }
+
+    public List<String> getEurovocUris() {
+        if(eurovocUris == null) {
+            this.eurovocUris = new ArrayList<>();
+        }
+        return eurovocUris;
+    }
+
+    public void setEurovocUris(List<String> eurovocUris) {
+        this.eurovocUris = eurovocUris;
+    }
+
+    public URL getUrl() {
+        return url;
+    }
+
+    public void setUrl(URL url) {
+        this.url = url;
     }
 }

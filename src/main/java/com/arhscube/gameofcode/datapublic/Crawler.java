@@ -59,7 +59,7 @@ public class Crawler {
 			}
 			ret.description = description.toString();
 			log.info("Extracted description :'{}'", description);
-			String author = doc.getElementsByAttributeValue("itemprop", "author").first().attr("title");
+			String author = getItemPropAttribute(doc, "author", "title");
 			ret.author = author;
 			log.info("Extracted provider :'{}'", author);
 
@@ -91,10 +91,15 @@ public class Crawler {
 	}
 
 	private static String getItemPropContent(Element el, String property) {
+
+		return getItemPropAttribute(el, property, "content");
+	}
+
+	private static String getItemPropAttribute(Element el, String property, String attribute) {
 		String ret = null;
 		Elements els = el.getElementsByAttributeValue("itemprop", property);
 		if (els != null && els.size() > 0) {
-			return els.first().attr("content");
+			return els.first().attr(attribute);
 		}
 		return ret;
 	}
