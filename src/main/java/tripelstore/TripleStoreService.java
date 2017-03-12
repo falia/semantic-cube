@@ -61,7 +61,7 @@ public class TripleStoreService {
         return ontModel;
     }
 
-    public Model writeModelToFile(){
+    public synchronized Model writeModelToFile(){
         Path newFile = Paths.get(OWL_FILE);
         try (OutputStream out = new FileOutputStream(newFile.toFile())) {
             model.write( out, "TTL" );
